@@ -141,12 +141,12 @@ public class Projectile : MonoBehaviour
         // If the projectile collides with something, call the Hit() function
         /*DealDamage(col);*/
 
-        if (!ImpactFX) return;
+     /*   if (!ImpactFX) return;
 
         // Use collision.contacts[0] to get the point and normal of the first contact
         var contact = col.contacts[0];
         var fx = Instantiate(ImpactFX, contact.point, Quaternion.LookRotation(contact.normal));
-        fx.localScale = Vector3.one * HitRadius + Vector3.one * ImpactSize;
+        fx.localScale = Vector3.one * HitRadius + Vector3.one * ImpactSize;*/
         Hit(col);
 	}
 
