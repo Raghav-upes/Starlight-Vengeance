@@ -64,7 +64,7 @@ public class Projectile : MonoBehaviour
 	}
 
 
-    private void DealDamage(Collision collision)
+/*    private void DealDamage(Collision collision)
     {
         var dfx = collision.collider.GetComponent<DamageFX>();
 
@@ -75,7 +75,7 @@ public class Projectile : MonoBehaviour
             var contact = collision.contacts[0];
             dfx.Hit(dfx.transform.InverseTransformPoint(contact.point), HitRadius, Dirt, Burn, Heat, Clip);
         }
-    }
+    }*/
     // Update is called once per frame
     void Update()
 	{
@@ -139,7 +139,7 @@ public class Projectile : MonoBehaviour
 	void OnCollisionEnter(Collision col)
 	{
         // If the projectile collides with something, call the Hit() function
-        DealDamage(col);
+        /*DealDamage(col);*/
 
         if (!ImpactFX) return;
 

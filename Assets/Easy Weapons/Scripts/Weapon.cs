@@ -227,12 +227,12 @@ public class Weapon : MonoBehaviour
     private InputFeatureUsage<float> triggerFeature = CommonUsages.trigger;
 
 
-    private void DealDamage(RaycastHit hit)
+ /*   private void DealDamage(RaycastHit hit)
     {
         var dfx = hit.collider.GetComponent<DamageFX>();
         if (dfx != null)
             dfx.Hit(dfx.transform.InverseTransformPoint(hit.point), HitRadius, Dirt, Burn, Heat, Clip);
-    }
+    }*/
 
     // Use this for initialization
     void Start()
@@ -924,7 +924,7 @@ public class Weapon : MonoBehaviour
 						if (hitEffect != null)
 						{
 							Instantiate(hitEffect, hit.point, Quaternion.FromToRotation(Vector3.up, hit.normal));
-                            DealDamage(hit);
+                           /* DealDamage(hit);*/
                             if (!ImpactFX) return;
                             var fx = Instantiate(ImpactFX, hit.point, Quaternion.LookRotation(hit.normal));
                             fx.localScale = Vector3.one * HitRadius + Vector3.one * ImpactSize;
