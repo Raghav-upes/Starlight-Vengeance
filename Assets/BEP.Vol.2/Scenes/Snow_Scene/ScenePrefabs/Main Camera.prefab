@@ -1,0 +1,137 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &100000
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 400000}
+  - component: {fileID: 2000000}
+  - component: {fileID: 12400000}
+  - component: {fileID: 8100000}
+  - component: {fileID: 11100000}
+  m_Layer: 0
+  m_Name: Main Camera
+  m_TagString: MainCamera
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &400000
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100000}
+  m_LocalRotation: {x: 0.020350775, y: 0.8513692, z: 0.004130007, w: 0.52415586}
+  m_LocalPosition: {x: 1781.0513, y: 137.33781, z: 2500.8433}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!20 &2000000
+Camera:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_ClearFlags: 1
+  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0.019607844}
+  m_projectionMatrixMode: 1
+  m_GateFitMode: 2
+  m_FOVAxisMode: 0
+  m_SensorSize: {x: 36, y: 24}
+  m_LensShift: {x: 0, y: 0}
+  m_FocalLength: 50
+  m_NormalizedViewPortRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  near clip plane: 0.8
+  far clip plane: 2000
+  field of view: 60
+  orthographic: 0
+  orthographic size: 100
+  m_Depth: -1
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RenderingPath: 2
+  m_TargetTexture: {fileID: 0}
+  m_TargetDisplay: 0
+  m_TargetEye: 3
+  m_HDR: 1
+  m_AllowMSAA: 1
+  m_AllowDynamicResolution: 0
+  m_ForceIntoRT: 0
+  m_OcclusionCulling: 1
+  m_StereoConvergence: 10
+  m_StereoSeparation: 0.022
+--- !u!124 &12400000
+Behaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+--- !u!81 &8100000
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+--- !u!111 &11100000
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 5d36a619af8fa79469292de7dead2f26, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 7632042e1d9b25047b923a7c80622091, type: 2}
+  - {fileID: 7400000, guid: 7a73f1600c27b7849844ee85f38a85a8, type: 2}
+  - {fileID: 7400000, guid: b98ac60c197096643bf8f76703765ab3, type: 2}
+  - {fileID: 7400000, guid: 337f7c695a9637e4f8c8193cfbef5d64, type: 2}
+  - {fileID: 7400000, guid: b408ad77cb6ab4845aa316283b239fb3, type: 2}
+  - {fileID: 7400000, guid: 0d5d4d3d676325747b0efd2060b8c84d, type: 2}
+  - {fileID: 7400000, guid: 93122963bc17c2c4d88346d14e256452, type: 2}
+  - {fileID: 7400000, guid: 98187d1dbcc253b4fa4095749b8015a8, type: 2}
+  - {fileID: 7400000, guid: b1b39ae1c5c9e43468d1c8fd08b62b92, type: 2}
+  - {fileID: 7400000, guid: 5d36a619af8fa79469292de7dead2f26, type: 2}
+  - {fileID: 0}
+  - {fileID: 7400000, guid: 53122e4fccdbd5547b41439210d3bfeb, type: 2}
+  - {fileID: 7400000, guid: d2d51285c0d6eb44283f6726c47bbcc8, type: 2}
+  - {fileID: 7400000, guid: c38042440c2ac1149ba2f93652e49e4b, type: 2}
+  - {fileID: 7400000, guid: 0164810721ea8ad44b818b4a58d5785a, type: 2}
+  - {fileID: 7400000, guid: 7832c77ef5055a94db2e22ae0bb4237c, type: 2}
+  - {fileID: 7400000, guid: 98fad8b9d4293164c9c2d3e08935b8c3, type: 2}
+  - {fileID: 7400000, guid: 5e95d2f0bed71d8409c1ea5477da8cb3, type: 2}
+  - {fileID: 7400000, guid: c01b9aedf54c80e4c87d30ce0f5bbb21, type: 2}
+  - {fileID: 7400000, guid: 4493b3b0b4eb497459ccebe35ec9eeac, type: 2}
+  - {fileID: 7400000, guid: c9b11f7d64b9f9348b620b7212f5ea55, type: 2}
+  - {fileID: 7400000, guid: f97739001b7b3d34c8d2b5225aeb7b8a, type: 2}
+  - {fileID: 7400000, guid: d0a4989b088d47f4fb53d02a84269a30, type: 2}
+  - {fileID: 7400000, guid: e5108c389ab2bac41a85c174ae8ecff4, type: 2}
+  - {fileID: 7400000, guid: 10ffaf1aa348a934e832755692d457c5, type: 2}
+  - {fileID: 7400000, guid: 2228913b605c4ee468e332f7b27254c4, type: 2}
+  - {fileID: 7400000, guid: 4023b4eaceaea314fa649e35546b063a, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
