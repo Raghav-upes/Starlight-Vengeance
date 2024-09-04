@@ -24,7 +24,7 @@ public class Projectile : MonoBehaviour
 {
 	public ProjectileType projectileType = ProjectileType.Standard;		// The type of projectile - Standard is a straight forward moving projectile, Seeker type seeks GameObjects with a specified tag
 	public DamageType damageType = DamageType.Direct;					// The damage type - Direct applys damage directly from the projectile, Explosion lets an instantiated explosion handle damage
-	public float damage = 100.0f;										// The amount of damage to be applied (only for Direct damage type)
+	public float damage = 10.0f;										// The amount of damage to be applied (only for Direct damage type)
 	public float speed = 10.0f;											// The speed at which this projectile will move
 	public float initialForce = 1000.0f;								// The force to be applied to the projectile initially
 	public float lifetime = 30.0f;										// The maximum time (in seconds) before the projectile is destroyed

@@ -39,7 +39,8 @@ public class OrbMerger : MonoBehaviour
             if(other.transform.childCount>0)
                 Destroy(other.transform.GetChild(0).gameObject);
            GameObject orb=Instantiate(this.gameObject,other.transform);
-            orb.transform.localScale = Vector3.one;
+            orb.transform.localScale = other.GetComponent<OrbSizeDefine>().mySize;
+            orb.transform.localPosition = Vector3.zero;
             this.GetComponentInParent<OrbFormation>().StopAnim(LeftHand);
             orb.GetComponentInParent<Weapon>().Reload();
             orb.AddComponent<OrbShooter>();

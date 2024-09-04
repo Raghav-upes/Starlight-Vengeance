@@ -64,7 +64,7 @@ public class CanvasToggle : MonoBehaviour
             if (isCanvasActive)
             {
                 // Set the canvas to face the camera and position it correctly
-                PositionCanvas();
+                /*PositionCanvas();*/
 
                 targetCanvas.gameObject.SetActive(true);
                 StartCoroutine(ScaleCanvas(Vector3.zero, originalScale));
@@ -79,7 +79,7 @@ public class CanvasToggle : MonoBehaviour
         }
     }
 
-    private void PositionCanvas()
+/*    private void PositionCanvas()
     {
         // Get the main camera
         Camera mainCamera = Camera.main;
@@ -92,7 +92,7 @@ public class CanvasToggle : MonoBehaviour
             // Make the canvas face the camera
             targetCanvas.transform.rotation = Quaternion.LookRotation(targetCanvas.transform.position - mainCamera.transform.position);
         }
-    }
+    }*/
 
     private System.Collections.IEnumerator ScaleCanvas(Vector3 from, Vector3 to, System.Action onComplete = null)
     {

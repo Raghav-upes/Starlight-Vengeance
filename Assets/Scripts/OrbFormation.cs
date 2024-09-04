@@ -23,6 +23,8 @@ public class OrbFormation : MonoBehaviour
     public AudioClip rechargeDown;
     public AudioClip powerUP;
 
+
+
     void Start()
     {
         // Ensure the target object is inactive and scaled to zero at the start
@@ -43,7 +45,7 @@ public class OrbFormation : MonoBehaviour
         if (leftHandDevices.Count > 0)
         {
             var leftHandDevice = leftHandDevices[0];
-            if (leftHandDevice.TryGetFeatureValue(CommonUsages.primaryButton, out bool isPressed))
+            if (leftHandDevice.TryGetFeatureValue(CommonUsages.gripButton, out bool isPressed))
             {
                 if (isPressed && !isHoldingButton)
                 {

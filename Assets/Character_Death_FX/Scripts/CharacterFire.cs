@@ -1,5 +1,8 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.AI;
+using System;
+using Unity.Services.Analytics.Internal;
 
 public class CharacterFire : MonoBehaviour
 {
@@ -16,6 +19,31 @@ public class CharacterFire : MonoBehaviour
     private float fadeTime = 1;
     private float pauseTime = 0;
     private float fadeSpeed = 0.05f;
+
+    private float hp = 3f;
+
+    [SerializeField] private Transform movePositionTransform;
+
+
+
+    private UnityEngine.AI.NavMeshAgent navMeshAgent;
+
+    private Rigidbody[] ragdollRigidbodies;
+    private SphereCollider[] ragdollColliders;
+    private CapsuleCollider[] ragdollCapsuleColliders;
+
+    //public SkinnedMeshRenderer SMR;
+
+    Animator anim;
+
+    private void Awake()
+    {
+        anim = GetComponent<Animator>();
+        navMeshAgent = GetComponent<UnityEngine.AI.NavMeshAgent>();
+        ragdollRigidbodies = GetComponentsInChildren<Rigidbody>();
+        ragdollColliders = GetComponentsInChildren<SphereCollider>();
+        ragdollCapsuleColliders = GetComponentsInChildren<CapsuleCollider>();
+    }
 
     void FaceCamera(GameObject obj)
     {
@@ -62,24 +90,122 @@ public class CharacterFire : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("BlueBullet"))
         {
-            this.GetComponent<CapsuleCollider>().enabled = false;
-            ResetMyMat();
+            hp--;
+            if (hp > 0)
+            {
+                if (GameObject.FindGameObjectsWithTag("leftAnim") != null)
+                {
+                    anim.ResetTrigger("Idle");
+                    anim.ResetTrigger("Run");
+                    anim.SetTrigger("hitLeft");
+                }
+                if (GameObject.FindGameObjectsWithTag("rightAnim") != null)
+                {
+                    anim.SetTrigger("hitRight");
+                    anim.ResetTrigger("Idle");
+                    anim.ResetTrigger("Run");
+                }
+                if (GameObject.FindGameObjectsWithTag("centre") != null)
+                {
+                    anim.SetTrigger("hitFront");
+                    anim.ResetTrigger("Idle");
+                    anim.ResetTrigger("Run");
+                }
+                this.GetComponent<CapsuleCollider>().enabled = false;
 
-            // Fade out the explosion light
-            StartCoroutine("FadeLight");
+                RagdollOn();
+            }
+            else if (hp == 0)
+            {
+                this.GetComponent<CapsuleCollider>().enabled = false;
+                ResetMyMat();
 
-            // Fade out the character
-            StartCoroutine(FadeOut());
+                // Fade out the explosion light
+                StartCoroutine(FadeLight());
 
-            // Activate the fire effects
-            fireFX.SetActive(true);
-            this.gameObject.SetActive(true);
+                // Fade out the character
+                StartCoroutine(FadeOut());
+
+                // Activate the fire effects
+                fireFX.SetActive(true);
+                this.gameObject.SetActive(true);
+            }
         }
-    }
 
+    }
     private void Update()
     {
         FaceCamera(this.gameObject);
+    }
+
+    void RagdollOn()
+    {
+
+        if (hp == 2)
+        {
+            foreach (CapsuleCollider cc in ragdollCapsuleColliders)
+            {
+                cc.enabled = false;
+            }
+        }
+
+        anim.ResetTrigger("Idle");
+        anim.ResetTrigger("Run");
+
+        //foreach (Rigidbody rb in ragdollRigidbodies)
+        //{
+        //    //rb.isKinematic = false; 
+        //    rb.detectCollisions = false;
+        //    rb.useGravity = true;
+        //    rb.freezeRotation = true;
+        //}
+        //foreach (SphereCollider col in ragdollColliders)
+        //{
+        //    col.enabled = false;
+        //}
+        navMeshAgent.speed = 0f;
+        //navMeshAgent.isStopped = true;
+        //if (anim != null)
+        //{
+        //    anim.enabled = false;
+        //}
+        StartCoroutine(disableRagdoll());
+    }
+
+    void RagdollOff()
+    {
+
+        this.GetComponent<CapsuleCollider>().enabled = true;
+        foreach (Rigidbody rb in ragdollRigidbodies)
+        {
+            rb.isKinematic = true;
+            rb.detectCollisions = true;
+            rb.freezeRotation = false;
+
+        }
+        foreach (SphereCollider col in ragdollColliders)
+        {
+            col.enabled = true;
+        }
+        navMeshAgent.speed = 2.8f;
+        //navMeshAgent.destination = movePositionTransform.position;
+        //navMeshAgent.isStopped = false;
+        if (anim != null)
+        {
+            anim.enabled = true;
+        }
+
+        anim.ResetTrigger("Idle");
+        anim.ResetTrigger("hitFront");
+        anim.ResetTrigger("hitLeft");
+        anim.ResetTrigger("hitRight");
+        anim.SetTrigger("Run");
+    }
+
+    IEnumerator disableRagdoll()
+    {
+        yield return new WaitForSeconds(1f);
+        RagdollOff();
     }
 
     private void ResetMyMat()

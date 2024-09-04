@@ -12,7 +12,7 @@ public class OrbShooter : MonoBehaviour
             Destroy(gameObject);
         }
 
-        float scale=(float)currentAmmo/(float)ammoCapacity;
+        float scale=(float)currentAmmo*this.GetComponentInParent<OrbSizeDefine>().mySize.x/(float)ammoCapacity;
         this.transform.localScale=new Vector3(scale,scale,scale);
 
       
