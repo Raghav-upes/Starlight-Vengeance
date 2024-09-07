@@ -22,7 +22,6 @@ public class CharacterFire : MonoBehaviour
 
     private float hp = 3f;
 
-    [SerializeField] private Transform movePositionTransform;
 
 
 
@@ -31,6 +30,7 @@ public class CharacterFire : MonoBehaviour
     private Rigidbody[] ragdollRigidbodies;
     private SphereCollider[] ragdollColliders;
     private CapsuleCollider[] ragdollCapsuleColliders;
+    private BoxCollider[] ragdollBoxColliders;
 
     //public SkinnedMeshRenderer SMR;
 
@@ -43,6 +43,8 @@ public class CharacterFire : MonoBehaviour
         ragdollRigidbodies = GetComponentsInChildren<Rigidbody>();
         ragdollColliders = GetComponentsInChildren<SphereCollider>();
         ragdollCapsuleColliders = GetComponentsInChildren<CapsuleCollider>();
+        ragdollBoxColliders = GetComponentsInChildren<BoxCollider>();
+
     }
 
     void FaceCamera(GameObject obj)
@@ -67,6 +69,19 @@ public class CharacterFire : MonoBehaviour
             mat[i] = new Material(originalMaterials[i]);  // Clone the material
         }
 
+        foreach (CapsuleCollider capsuleCollider in ragdollCapsuleColliders)
+        {
+            capsuleCollider.enabled = false;
+            capsuleCollider.gameObject.AddComponent<LimbCollision>();
+        }
+
+
+        foreach (SphereCollider collider in ragdollColliders)
+        {
+            collider.enabled = false;
+            collider.gameObject.AddComponent<LimbCollision>();
+        }
+        this.GetComponent<SphereCollider>().enabled = true;
         // Assign the cloned materials to the game object
         GetComponentInChildren<Renderer>().materials = mat;
 
@@ -86,38 +101,40 @@ public class CharacterFire : MonoBehaviour
         fireFX.SetActive(false);
     }
 
-    private void OnCollisionEnter(Collision collision)
+    public void OnChildCollision(GameObject child, Collision collision)
     {
+        Debug.LogWarning("Collision detected in child: " + child.name);
+
         if (collision.gameObject.CompareTag("BlueBullet"))
         {
             hp--;
+
             if (hp > 0)
             {
-                if (GameObject.FindGameObjectsWithTag("leftAnim") != null)
+                // Trigger animations based on which child collided
+                if (child.CompareTag("leftAnim"))
                 {
                     anim.ResetTrigger("Idle");
                     anim.ResetTrigger("Run");
                     anim.SetTrigger("hitLeft");
                 }
-                if (GameObject.FindGameObjectsWithTag("rightAnim") != null)
+                else if (child.CompareTag("rightAnim"))
                 {
+                    anim.ResetTrigger("Idle");
+                    anim.ResetTrigger("Run");
                     anim.SetTrigger("hitRight");
-                    anim.ResetTrigger("Idle");
-                    anim.ResetTrigger("Run");
                 }
-                if (GameObject.FindGameObjectsWithTag("centre") != null)
+                else if (child.CompareTag("centre"))
                 {
-                    anim.SetTrigger("hitFront");
                     anim.ResetTrigger("Idle");
                     anim.ResetTrigger("Run");
+                    anim.SetTrigger("hitFront");
                 }
-                this.GetComponent<CapsuleCollider>().enabled = false;
 
                 RagdollOn();
             }
             else if (hp == 0)
             {
-                this.GetComponent<CapsuleCollider>().enabled = false;
                 ResetMyMat();
 
                 // Fade out the explosion light
@@ -126,12 +143,19 @@ public class CharacterFire : MonoBehaviour
                 // Fade out the character
                 StartCoroutine(FadeOut());
 
+                foreach (CapsuleCollider cc in ragdollCapsuleColliders)
+                {
+                    cc.enabled = false;
+                }
+                foreach (SphereCollider collider in ragdollColliders)
+                {
+                    collider.enabled = false;
+                }
                 // Activate the fire effects
                 fireFX.SetActive(true);
-                this.gameObject.SetActive(true);
+               /* this.gameObject.SetActive(true); // Hide the object after death*/
             }
         }
-
     }
     private void Update()
     {
@@ -143,10 +167,10 @@ public class CharacterFire : MonoBehaviour
 
         if (hp == 2)
         {
-            foreach (CapsuleCollider cc in ragdollCapsuleColliders)
+/*            foreach (CapsuleCollider cc in ragdollCapsuleColliders)
             {
                 cc.enabled = false;
-            }
+            }*/
         }
 
         anim.ResetTrigger("Idle");
@@ -175,18 +199,18 @@ public class CharacterFire : MonoBehaviour
     void RagdollOff()
     {
 
-        this.GetComponent<CapsuleCollider>().enabled = true;
-        foreach (Rigidbody rb in ragdollRigidbodies)
+  /*      this.GetComponent<CapsuleCollider>().enabled = true;*/
+     foreach (Rigidbody rb in ragdollRigidbodies)
         {
-            rb.isKinematic = true;
+            rb.isKinematic = false;
             rb.detectCollisions = true;
             rb.freezeRotation = false;
 
         }
-        foreach (SphereCollider col in ragdollColliders)
-        {
-            col.enabled = true;
-        }
+        /*    foreach (SphereCollider col in ragdollColliders)
+         {
+             col.enabled = true;
+         }*/
         navMeshAgent.speed = 2.8f;
         //navMeshAgent.destination = movePositionTransform.position;
         //navMeshAgent.isStopped = false;

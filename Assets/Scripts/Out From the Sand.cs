@@ -60,8 +60,9 @@ public class OutFromtheSand : MonoBehaviour
             if(rb==null)
                 rb = GetComponent<Rigidbody>();
 
-            rb.useGravity = true;
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            rb.useGravity = true;
+
            /* flag = false;*/
 
 
@@ -69,7 +70,7 @@ public class OutFromtheSand : MonoBehaviour
             /*     this.GetComponent<CapsuleCollider>().enabled = true;*/
             // Invoke the PlacePothole function after a short delay
             Invoke("enableColl", 1f);
-            Invoke("PlacePothole", 2.2f);
+            Invoke("PlacePothole", 1.6f);
         }
 
 
@@ -79,23 +80,44 @@ public class OutFromtheSand : MonoBehaviour
     IEnumerator chakoOP(GameObject obj)
     {
         yield return new WaitForSeconds(0.2f);
+        this.GetComponent<SphereCollider>().enabled = true;
         obj.GetComponentInChildren<Rigidbody>().isKinematic = true;
     }
 
 
     void enableColl()
     {
-     
-        this.GetComponent<CapsuleCollider>().enabled = true;
+
+        /*this.GetComponent<CapsuleCollider>().enabled = true;*/
+
+        Debug.LogWarning("plplp");
+        this.GetComponent<SphereCollider>().enabled = true;
+
+        foreach (CapsuleCollider capsuleCollider in this.GetComponentsInChildren<CapsuleCollider>())
+        {
+            capsuleCollider.enabled = true;
+        }
+
+        foreach (BoxCollider boxCollider in this.GetComponentsInChildren<BoxCollider>())
+        {
+            boxCollider.enabled = true;
+        }
+
+        foreach (SphereCollider collider in this.GetComponentsInChildren<SphereCollider>())
+        {
+            collider.enabled = true;
+        }
     }
     void PlacePothole()
     {
         // Place the pothole at the object's current position
 
-
         rb.isKinematic = true;
+
+
         this.GetComponent<EnemyAI>().enabled = true;
         // Re-enable the NavMeshAgent after the jump
+        this.GetComponent<SphereCollider>().enabled = true;
         agent.enabled = true;
         this.enabled = false;
     }

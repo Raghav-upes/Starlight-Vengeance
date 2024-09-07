@@ -12,7 +12,7 @@ public class EnemyAI : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
     }
-    [SerializeField] private Transform movePositionTransform;
+/*    [SerializeField] private Transform movePositionTransform;*/
     private NavMeshAgent navMeshAgent;
     private bool isChasingPlayer = false; // Flag to track if the enemy is chasing the player
     Animator anim;
@@ -30,7 +30,8 @@ public class EnemyAI : MonoBehaviour
             {
 
                 // If chasing, set the destination to the player's position
-                navMeshAgent.destination = movePositionTransform.position;
+              
+                navMeshAgent.destination = player.position;
                 navMeshAgent.isStopped = false;
             }
             else
