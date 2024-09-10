@@ -56,7 +56,7 @@ public class SpawnAtRandom : MonoBehaviour
                 }
             }
 
-            yield return new WaitForSeconds(1f); // Small delay between spawns
+            yield return new WaitForSeconds(3f); // Small delay between spawns
         }
     }
 

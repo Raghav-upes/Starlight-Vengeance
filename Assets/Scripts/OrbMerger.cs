@@ -51,10 +51,10 @@ public class OrbMerger : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        //if (other.CompareTag("BlueBullet"))
-        //{
+        if (other.CompareTag("Orb"))
+        {
             LeftHand.SendHapticImpulse(0, 0.2f, 0.1f);
             RightHand.SendHapticImpulse(0, 0.2f, 0.1f);
-        //}
+        }
     }
 }
