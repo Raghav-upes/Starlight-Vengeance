@@ -25,12 +25,6 @@ public class OrbMerger : MonoBehaviour
 
         }
     }
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
 
     private void OnTriggerEnter(Collider other)
     {
@@ -55,12 +49,12 @@ public class OrbMerger : MonoBehaviour
         }
     }
 
-    //private void OnTriggerStay(Collider other)
-    //{
-    //    if (other.CompareTag("BlueBullet"))
-    //    {
-    //        LeftHand.SendHapticImpulse(0, 0.2f, 0.1f);
-    //        RightHand.SendHapticImpulse(0, 0.2f, 0.1f);
-    //    }
-    //}
+    private void OnTriggerStay(Collider other)
+    {
+        //if (other.CompareTag("BlueBullet"))
+        //{
+            LeftHand.SendHapticImpulse(0, 0.2f, 0.1f);
+            RightHand.SendHapticImpulse(0, 0.2f, 0.1f);
+        //}
+    }
 }
