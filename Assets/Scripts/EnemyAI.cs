@@ -75,6 +75,11 @@ public class EnemyAI : MonoBehaviour
             anim.ResetTrigger("Idle");
             anim.SetTrigger("Run");
 
+            float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+            if (distanceToPlayer < 7f )
+            {
+                anim.SetTrigger("Spit");
+            }
         }
     }
 
