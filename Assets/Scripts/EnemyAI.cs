@@ -12,53 +12,55 @@ public class EnemyAI : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
     }
-/*    [SerializeField] private Transform movePositionTransform;*/
     private NavMeshAgent navMeshAgent;
     private bool isChasingPlayer = false; // Flag to track if the enemy is chasing the player
     Animator anim;
+
+    private GameObject sphere;
+    [SerializeField] private Transform mouthTransform;
+    [SerializeField] private float projectileSpeed = 10f;
+
     private void Awake()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
+
+        sphere = Resources.Load<GameObject>("Sphere");
     }
 
     private void Update()
     {
+        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
         if (navMeshAgent.enabled)
         {
             if (isChasingPlayer)
             {
 
                 // If chasing, set the destination to the player's position
-              
+
                 navMeshAgent.destination = player.position;
                 navMeshAgent.isStopped = false;
+
+                if (distanceToPlayer < 7f)
+                {
+                    Debug.Log("Spit triggered");
+                    anim.SetTrigger("Spit");
+                    Invoke("ShootProjectile", 4f);
+                }
             }
             else
             {
                 navMeshAgent.isStopped = true;
             }
-            float distanceToPlayer = Vector3.Distance(transform.position, player.position);
             if (distanceToPlayer > 55f)
             {
-
-                void Update()
-                {
-                    isChasingPlayer = false;
-
-                }
+                isChasingPlayer = false;
                 // Handle attack behavior (e.g., deal damage to player)
 
             }
             else
             {
-
-                void Update()
-                {
-                    isChasingPlayer = true;
-
-                }
-
+                isChasingPlayer = true;
 
             }
         }
@@ -74,12 +76,6 @@ public class EnemyAI : MonoBehaviour
             isChasingPlayer = true;
             anim.ResetTrigger("Idle");
             anim.SetTrigger("Run");
-
-            float distanceToPlayer = Vector3.Distance(transform.position, player.position);
-            if (distanceToPlayer < 7f )
-            {
-                anim.SetTrigger("Spit");
-            }
         }
     }
 
@@ -93,6 +89,22 @@ public class EnemyAI : MonoBehaviour
             anim.SetTrigger("Idle");
             anim.ResetTrigger("Run");
 
+        }
+    }
+    private void ShootProjectile()
+    {
+        if (sphere == null)
+        {
+            Debug.LogError("Projectile prefab is not assigned or not found in Resources folder.");
+            return;
+        }
+
+        GameObject spit = Instantiate(sphere, mouthTransform.position, mouthTransform.rotation);
+        Rigidbody rb = spit.GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            Vector3 direction = (player.position - mouthTransform.position).normalized;
+            rb.AddForce(direction * projectileSpeed, ForceMode.VelocityChange);
         }
     }
 }
