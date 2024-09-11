@@ -16,6 +16,7 @@ public class SpawnAtRandom : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             StartCoroutine(SpawnEnemiesAroundPlayer());
+            this.GetComponent<BoxCollider>().enabled= false;
 
         }
     }
