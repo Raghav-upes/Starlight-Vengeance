@@ -30,9 +30,13 @@ public class OrbMerger : MonoBehaviour
     {
         if (other.CompareTag("Orb"))
         {
-            if(other.transform.childCount>0)
+            if (other.transform.childCount > 0)
                 Destroy(other.transform.GetChild(0).gameObject);
-           GameObject orb=Instantiate(this.gameObject,other.transform);
+            GameObject orb = Instantiate(this.gameObject, other.transform);
+            if (orb.GetComponentInParent<PurifyTower>() != null)
+            {
+                orb.GetComponentInParent<PurifyTower>().purify();
+            }
             orb.transform.localScale = other.GetComponent<OrbSizeDefine>().mySize;
             orb.transform.localPosition = Vector3.zero;
             this.GetComponentInParent<OrbFormation>().StopAnim(LeftHand);
@@ -40,12 +44,6 @@ public class OrbMerger : MonoBehaviour
             orb.AddComponent<OrbShooter>();
             Destroy(orb.GetComponent<SphereCollider>());
             Destroy(orb.GetComponent<OrbMerger>());
-        }
-
-        if (other.CompareTag("BlueBullet"))
-        {
-            LeftHand.SendHapticImpulse(0, 0.2f, 0.1f);
-            RightHand.SendHapticImpulse(0, 0.2f, 0.1f);
         }
     }
 

@@ -11,10 +11,17 @@ public class SpawnAtRandom : MonoBehaviour
     public float groundOffset = -2f; // Offset to place enemy slightly under the ground
     public int spawnCount = 5; // Number of enemies to spawn
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            StartCoroutine(SpawnEnemiesAroundPlayer());
+
+        }
+    }
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
-        StartCoroutine(SpawnEnemiesAroundPlayer());
 
     }
 

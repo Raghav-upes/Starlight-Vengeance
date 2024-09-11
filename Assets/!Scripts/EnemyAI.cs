@@ -8,6 +8,13 @@ public class EnemyAI : MonoBehaviour
 {
 
     private Transform player;
+    private AudioSource audioSource;
+
+    [Header("Audio Clips")]
+    public AudioClip runClip;
+    public AudioClip idleClip;
+    public AudioClip spitClip;
+
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
@@ -20,10 +27,12 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private Transform mouthTransform;
     [SerializeField] private float projectileSpeed = 10f;
 
+    private bool isThrowing=false;
     private void Awake()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
 
         sphere = Resources.Load<GameObject>("Sphere");
     }
@@ -45,8 +54,15 @@ public class EnemyAI : MonoBehaviour
                 {
                     Debug.Log("Spit triggered");
                     anim.SetTrigger("Spit");
-                    Invoke("ShootProjectile", 4f);
+                    PlayAudio(spitClip);
+                    StopCoroutine(ShootProjectile());
                 }
+
+                if (distanceToPlayer > 10 && distanceToPlayer < 55 && !isThrowing)
+                {
+                    StartCoroutine(ShootProjectile());
+
+                        }
             }
             else
             {
@@ -76,6 +92,7 @@ public class EnemyAI : MonoBehaviour
             isChasingPlayer = true;
             anim.ResetTrigger("Idle");
             anim.SetTrigger("Run");
+            PlayAudio(runClip);
         }
     }
 
@@ -88,23 +105,38 @@ public class EnemyAI : MonoBehaviour
             isChasingPlayer = false;
             anim.SetTrigger("Idle");
             anim.ResetTrigger("Run");
+            PlayAudio(idleClip);
 
         }
     }
-    private void ShootProjectile()
+    private IEnumerator ShootProjectile()
     {
+        isThrowing = true;
+        yield return new WaitForSeconds(2f); 
+
         if (sphere == null)
         {
             Debug.LogError("Projectile prefab is not assigned or not found in Resources folder.");
-            return;
+            yield return null;
         }
 
         GameObject spit = Instantiate(sphere, mouthTransform.position, mouthTransform.rotation);
         Rigidbody rb = spit.GetComponent<Rigidbody>();
         if (rb != null)
         {
-            Vector3 direction = (player.position - mouthTransform.position).normalized;
+            Vector3 direction = (Camera.main.transform.position - mouthTransform.position).normalized;
             rb.AddForce(direction * projectileSpeed, ForceMode.VelocityChange);
         }
+        yield return new WaitForSeconds(5f);
+        isThrowing = false;
     }
+    public void PlayAudio(AudioClip clip)
+    {
+        if (audioSource != null && clip != null)
+        {
+            audioSource.clip = clip;
+            audioSource.Play();
+        }
+    }
+
 }
