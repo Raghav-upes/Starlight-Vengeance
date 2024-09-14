@@ -13,7 +13,7 @@ public class HideHole : MonoBehaviour
 
    void HideMe()
     {
-        this.gameObject.SetActive(false);
+       Destroy(this.gameObject);
     }
     // Update is called once per frame
    

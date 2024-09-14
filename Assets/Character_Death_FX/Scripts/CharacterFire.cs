@@ -23,6 +23,8 @@ public class CharacterFire : MonoBehaviour
     private float hp = 3f;
 
 
+    EnemyAI enemyAI;
+
 
 
     private UnityEngine.AI.NavMeshAgent navMeshAgent;
@@ -44,9 +46,9 @@ public class CharacterFire : MonoBehaviour
         ragdollColliders = GetComponentsInChildren<SphereCollider>();
         ragdollCapsuleColliders = GetComponentsInChildren<CapsuleCollider>();
         ragdollBoxColliders = GetComponentsInChildren<BoxCollider>();
-
+        enemyAI = this.GetComponent<EnemyAI>();
     }
-
+/*
     void FaceCamera(GameObject obj)
     {
         // Calculate the direction from the object to the camera
@@ -57,7 +59,7 @@ public class CharacterFire : MonoBehaviour
 
         // Rotate the object to face the camera
         obj.transform.rotation = Quaternion.LookRotation(directionToCamera);
-    }
+    }*/
 
     void Start()
     {
@@ -109,6 +111,8 @@ public class CharacterFire : MonoBehaviour
         {
             hp--;
 
+            enemyAI.PlayAudio(enemyAI.hitClip);
+
             if (hp > 0)
             {
                 // Trigger animations based on which child collided
@@ -157,10 +161,10 @@ public class CharacterFire : MonoBehaviour
             }
         }
     }
-    private void Update()
+/*    private void Update()
     {
         FaceCamera(this.gameObject);
-    }
+    }*/
 
     void RagdollOn()
     {

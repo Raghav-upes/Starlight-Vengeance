@@ -14,7 +14,7 @@ public class EnemyAI : MonoBehaviour
     public AudioClip runClip;
     public AudioClip idleClip;
     public AudioClip spitClip;
-
+    public AudioClip hitClip;
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
@@ -54,7 +54,7 @@ public class EnemyAI : MonoBehaviour
                 {
                     Debug.Log("Spit triggered");
                     anim.SetTrigger("Spit");
-                    PlayAudio(spitClip);
+
                     StopCoroutine(ShootProjectile());
                 }
 
@@ -119,7 +119,7 @@ public class EnemyAI : MonoBehaviour
             Debug.LogError("Projectile prefab is not assigned or not found in Resources folder.");
             yield return null;
         }
-
+        PlayAudio(spitClip);
         GameObject spit = Instantiate(sphere, mouthTransform.position, mouthTransform.rotation);
         Rigidbody rb = spit.GetComponent<Rigidbody>();
         if (rb != null)
