@@ -8,13 +8,12 @@ public class EnemyGolem: MonoBehaviour
 {
 
     private Transform player;
-/*    private AudioSource audioSource;
-
+    private AudioSource audioSource;
+    EnemyAI enemyAI;
     [Header("Audio Clips")]
-    public AudioClip runClip;
-    public AudioClip idleClip;
-    public AudioClip spitClip;
-    public AudioClip hitClip;*/
+    public AudioClip wakeClip;
+    public AudioClip step1Clip;
+    public AudioClip step2Clip;
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
@@ -23,12 +22,8 @@ public class EnemyGolem: MonoBehaviour
     private bool isChasingPlayer = false;
     public float distanceTriggerOutZone;
     float enemySpeed;
-    // Flag to track if the enemy is chasing the player
     Animator anim;
-    /*
-        private GameObject sphere;
-        [SerializeField] private Transform mouthTransform;
-        [SerializeField] private float projectileSpeed = 10f;*/
+    
     float distanceToPlayer;
     private bool isThrowing = false;
     private void Awake()
@@ -36,9 +31,7 @@ public class EnemyGolem: MonoBehaviour
         navMeshAgent = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
         enemySpeed=navMeshAgent.speed;
-/*        audioSource = GetComponent<AudioSource>();
-
-        sphere = Resources.Load<GameObject>("Sphere");*/
+        audioSource = gameObject.GetComponent<AudioSource>();
     }
 
 
@@ -49,25 +42,8 @@ public class EnemyGolem: MonoBehaviour
         {
             if (isChasingPlayer)
             {
-
-                // If chasing, set the destination to the player's position
-
                 navMeshAgent.destination = player.position;
                 navMeshAgent.isStopped = false;
-
-/*                if (distanceToPlayer < 7f)
-                {
-                    Debug.Log("Spit triggered");
-                    anim.SetTrigger("Spit");
-
-                    StopCoroutine(ShootProjectile());
-                }
-
-                if (distanceToPlayer > 10 && distanceToPlayer < 55 && !isThrowing)
-                {
-                    StartCoroutine(ShootProjectile());
-
-                }*/
             }
             else
             {
@@ -76,8 +52,6 @@ public class EnemyGolem: MonoBehaviour
             if (distanceToPlayer > distanceTriggerOutZone)
             {
                 isChasingPlayer = false;
-                // Handle attack behavior (e.g., deal damage to player)
-
             }
             else
             {
@@ -94,8 +68,6 @@ public class EnemyGolem: MonoBehaviour
         {
 
             StartCoroutine(WakeRandom());
-
-     /*       PlayAudio(runClip);*/
         }
     }
 
@@ -110,12 +82,15 @@ public class EnemyGolem: MonoBehaviour
         {
             navMeshAgent.enabled = true;
             anim.SetBool("WakeUp", true);
+            enemyAI.PlayAudio(wakeClip);
             navMeshAgent.speed = 0;
             StartCoroutine(DelayAnimRun());
         }
         else
         {
             anim.SetTrigger("Run");
+            enemyAI.PlayAudio(step1Clip);
+            enemyAI.PlayAudio(step2Clip);
         }
 
 
@@ -127,6 +102,8 @@ public class EnemyGolem: MonoBehaviour
     {
         yield return new WaitForSeconds(1.3f);
         anim.SetTrigger("Run");
+        enemyAI.PlayAudio(step1Clip);
+        enemyAI.PlayAudio(step2Clip);
         navMeshAgent.speed = enemySpeed;
     }
 
@@ -139,38 +116,6 @@ public class EnemyGolem: MonoBehaviour
             isChasingPlayer = false;
             anim.SetTrigger("Idle");
             anim.ResetTrigger("Run");
-/*            PlayAudio(idleClip);*/
-
         }
     }
-/*    private IEnumerator ShootProjectile()
-    {
-        isThrowing = true;
-        yield return new WaitForSeconds(2f);
-
-        if (sphere == null)
-        {
-            Debug.LogError("Projectile prefab is not assigned or not found in Resources folder.");
-            yield return null;
-        }
-        PlayAudio(spitClip);
-        GameObject spit = Instantiate(sphere, mouthTransform.position, mouthTransform.rotation);
-        Rigidbody rb = spit.GetComponent<Rigidbody>();
-        if (rb != null)
-        {
-            Vector3 direction = (Camera.main.transform.position - mouthTransform.position).normalized;
-            rb.AddForce(direction * projectileSpeed, ForceMode.VelocityChange);
-        }
-        yield return new WaitForSeconds(5f);
-        isThrowing = false;
-    }
-    public void PlayAudio(AudioClip clip)
-    {
-        if (audioSource != null && clip != null)
-        {
-            audioSource.clip = clip;
-            audioSource.Play();
-        }
-    }*/
-
 }
