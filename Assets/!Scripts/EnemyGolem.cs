@@ -9,7 +9,6 @@ public class EnemyGolem: MonoBehaviour
 
     private Transform player;
     private AudioSource audioSource;
-    EnemyAI enemyAI;
     [Header("Audio Clips")]
     public AudioClip wakeClip;
     public AudioClip step1Clip;
@@ -82,15 +81,15 @@ public class EnemyGolem: MonoBehaviour
         {
             navMeshAgent.enabled = true;
             anim.SetBool("WakeUp", true);
-            enemyAI.PlayAudio(wakeClip);
+            PlayAudio(wakeClip);
             navMeshAgent.speed = 0;
             StartCoroutine(DelayAnimRun());
         }
         else
         {
             anim.SetTrigger("Run");
-            enemyAI.PlayAudio(step1Clip);
-            enemyAI.PlayAudio(step2Clip);
+            PlayAudio(step1Clip);
+            PlayAudio(step2Clip);
         }
 
 
@@ -102,8 +101,8 @@ public class EnemyGolem: MonoBehaviour
     {
         yield return new WaitForSeconds(1.3f);
         anim.SetTrigger("Run");
-        enemyAI.PlayAudio(step1Clip);
-        enemyAI.PlayAudio(step2Clip);
+        PlayAudio(step1Clip);
+        PlayAudio(step2Clip);
         navMeshAgent.speed = enemySpeed;
     }
 
@@ -116,6 +115,16 @@ public class EnemyGolem: MonoBehaviour
             isChasingPlayer = false;
             anim.SetTrigger("Idle");
             anim.ResetTrigger("Run");
+        }
+    }
+
+
+    public void PlayAudio(AudioClip clip)
+    {
+        if (audioSource != null && clip != null)
+        {
+            audioSource.clip = clip;
+            audioSource.Play();
         }
     }
 }

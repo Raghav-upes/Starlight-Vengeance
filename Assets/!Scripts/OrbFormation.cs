@@ -12,7 +12,7 @@ public class OrbFormation : MonoBehaviour
     public float scaleDownTime = 0.5f;
     public float displacementMagnitude = 0.01f; // The amount of random displacement during scaling
 
-    private Vector3 targetScale = new Vector3(0.04f, 0.04f, 0.04f);
+    public Vector3 targetScale = new Vector3(0.04f, 0.04f, 0.04f);
     private Vector3 initialScale = Vector3.zero;
     private Vector3 initialPosition;
     public bool isHoldingButton = false;
