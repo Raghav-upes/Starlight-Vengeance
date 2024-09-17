@@ -13,6 +13,7 @@ public class SpawnGolemRandom : MonoBehaviour
     public float spawnDelay = 2f;
 
     public int EnemyDeathCount;
+    public GameObject orbSphere;
     private void Start()
     {
         EnemyDeathCount = spawnCount;
@@ -31,7 +32,7 @@ public class SpawnGolemRandom : MonoBehaviour
 
     IEnumerator RiseGolem()
     {
-        for (int i = 1; i < spawnCount + 1; i++)
+        for (int i = 1; i < this.transform.childCount ; i++)
         {
             this.transform.GetChild(i).GetComponent<SphereCollider>().enabled = true;
             yield return new WaitForSeconds(spawnDelay);
@@ -97,6 +98,7 @@ public class SpawnGolemRandom : MonoBehaviour
         if (EnemyDeathCount == 0)
         {
             GetComponentInChildren<PurifyTower>().canvasText.text = "Purify the tower";
+            orbSphere.GetComponent<SphereCollider>().enabled = true;
         }
     }
 }

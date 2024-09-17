@@ -15,7 +15,7 @@ public class SpawnAtRandom : MonoBehaviour
 
 
     public int EnemyDeathCount;
-
+    public GameObject orbSphere;
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -96,6 +96,7 @@ public class SpawnAtRandom : MonoBehaviour
         if(EnemyDeathCount==0)
         {
             GetComponentInChildren<PurifyTower>().canvasText.text = "Purify the tower";
+            orbSphere.GetComponent<SphereCollider>().enabled = true;
         }
     }
 }

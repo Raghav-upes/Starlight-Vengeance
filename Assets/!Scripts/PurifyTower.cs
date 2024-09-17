@@ -12,6 +12,7 @@ public class PurifyTower : MonoBehaviour
 
     public GameObject ToBeNectTower;
     public GameObject NextGunToBeUnlock;
+    public GameObject NextGunParentToBeUnlock;
     private void OnTriggerEnter(Collider other)
     {
         // Check if the object entering the collider has the "Player" tag (which should be your XR rig)
@@ -64,8 +65,8 @@ public class PurifyTower : MonoBehaviour
                     eyeRenderer.materials = materials;
                     ToBeNectTower.SetActive(true);
                     NextGunToBeUnlock.SetActive(true);
-                    NextGunToBeUnlock.GetComponentInParent<BoxCollider>().enabled = true;
-                    NextGunToBeUnlock.GetComponentInParent<WeaponSpawner>().enabled = true;
+                    NextGunParentToBeUnlock.GetComponent<BoxCollider>().enabled = true;
+                    NextGunParentToBeUnlock.GetComponent<WeaponSpawner>().enabled = true;
                     canvas.gameObject.SetActive(false);
                 }
             }

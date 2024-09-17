@@ -174,27 +174,27 @@ public class EnemyGolem: MonoBehaviour
 
             if (hp > 0)
             {
-                if (child.CompareTag("leftAnim"))
+                if (child.CompareTag("GollumAttack"))
                 {
                     anim.ResetTrigger("Run");
                     anim.SetTrigger("hitGolum");
                     anim.ResetTrigger("attackPlayer");
                     StartCoroutine(runAgain());
                 }
-                else if (child.CompareTag("rightAnim"))
-                {
-                    anim.ResetTrigger("Run");
-                    anim.ResetTrigger("attackPlayer");
-                    anim.SetTrigger("hitGolum");
-                    StartCoroutine(runAgain());
-                }
-                else if (child.CompareTag("centre"))
-                {
-                    anim.ResetTrigger("Run");
-                    anim.ResetTrigger("attackPlayer");
-                    anim.SetTrigger("hitGolum");
-                    StartCoroutine(runAgain());
-                }
+                //else if (child.CompareTag("rightAnim"))
+                //{
+                //    anim.ResetTrigger("Run");
+                //    anim.ResetTrigger("attackPlayer");
+                //    anim.SetTrigger("hitGolum");
+                //    StartCoroutine(runAgain());
+                //}
+                //else if (child.CompareTag("centre"))
+                //{
+                //    anim.ResetTrigger("Run");
+                //    anim.ResetTrigger("attackPlayer");
+                //    anim.SetTrigger("hitGolum");
+                //    StartCoroutine(runAgain());
+                //}
             }
             else if (hp == 0)
             {
