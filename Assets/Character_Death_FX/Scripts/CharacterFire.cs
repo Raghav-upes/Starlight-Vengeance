@@ -280,6 +280,7 @@ public class CharacterFire : MonoBehaviour
     IEnumerator DestroyMe()
     {
         yield return new WaitForSeconds(2.5f);
+        GetComponentInParent<SpawnAtRandom>().SpidersKilled();
         Destroy(gameObject);
     }
 

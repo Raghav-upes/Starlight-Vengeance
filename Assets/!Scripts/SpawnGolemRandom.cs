@@ -11,8 +11,11 @@ public class SpawnGolemRandom : MonoBehaviour
     public int spawnCount = 5; // Number of enemies to spawn
     public Transform spawnAround;
     public float spawnDelay = 2f;
+
+    public int EnemyDeathCount;
     private void Start()
     {
+        EnemyDeathCount = spawnCount;
         StartCoroutine(SpawnEnemiesAroundPlayer());
     }
     private void OnTriggerEnter(Collider other)
@@ -85,5 +88,15 @@ public class SpawnGolemRandom : MonoBehaviour
         spawnPosition = spawnAround.position + new Vector3(Mathf.Cos(angle) * distance, 0, Mathf.Sin(angle) * distance);
 
         return spawnPosition;
+    }
+
+
+    public void GolemKilled()
+    {
+        EnemyDeathCount--;
+        if (EnemyDeathCount == 0)
+        {
+            GetComponentInChildren<PurifyTower>().canvasText.text = "Purify the tower";
+        }
     }
 }

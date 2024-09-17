@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.AI.Navigation;
 using UnityEngine;
 
 public class SpawnAtRandom : MonoBehaviour
@@ -10,6 +11,10 @@ public class SpawnAtRandom : MonoBehaviour
     public float maxSpawnDistance = 20f; // Maximum spawn distance from the player
     public float groundOffset = -2f; // Offset to place enemy slightly under the ground
     public int spawnCount = 5; // Number of enemies to spawn
+
+
+
+    public int EnemyDeathCount;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -22,9 +27,13 @@ public class SpawnAtRandom : MonoBehaviour
     }
     void Start()
     {
+        EnemyDeathCount = spawnCount;
         player = GameObject.FindGameObjectWithTag("Player").transform;
 
     }
+
+
+
 
     IEnumerator SpawnEnemiesAroundPlayer()
     {
@@ -37,7 +46,7 @@ public class SpawnAtRandom : MonoBehaviour
             spawnPosition.y = 50f;
 
             // Instantiate enemy and handle spawning
-            GameObject enemy = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
+            GameObject enemy = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity,this.transform);
             Rigidbody rb = enemy.GetComponent<Rigidbody>();
             if (rb != null)
             {
@@ -53,7 +62,7 @@ public class SpawnAtRandom : MonoBehaviour
                 if (Physics.Raycast(spawnPosition, Vector3.down, out hit, Mathf.Infinity))
                 {
                     // Check if we hit the ground
-                    if (hit.collider.CompareTag("Ground"))
+                    if (hit.collider.CompareTag("Ground") && hit.collider.GetComponentInChildren<NavMeshSurface>()!=null)
                     {
                         // Set the enemy's Y position to slightly below the ground
                         enemy.transform.position = new Vector3(spawnPosition.x, hit.point.y + groundOffset, spawnPosition.z);
@@ -78,5 +87,15 @@ public class SpawnAtRandom : MonoBehaviour
         spawnPosition = player.position + new Vector3(Mathf.Cos(angle) * distance, 0, Mathf.Sin(angle) * distance);
 
         return spawnPosition;
+    }
+
+
+    public void SpidersKilled()
+    {
+        EnemyDeathCount--;
+        if(EnemyDeathCount==0)
+        {
+            GetComponentInChildren<PurifyTower>().canvasText.text = "Purify the tower";
+        }
     }
 }
