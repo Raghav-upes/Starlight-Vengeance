@@ -32,14 +32,25 @@ public class SpawnGolemRandom : MonoBehaviour
 
     IEnumerator RiseGolem()
     {
-        for (int i = 1; i < this.transform.childCount ; i++)
+        for (int i = 1; i < spawnCount + 1; i++)
         {
+            yield return new WaitForFixedUpdate();
             this.transform.GetChild(i).GetComponent<SphereCollider>().enabled = true;
+            this.transform.GetChild(i).GetComponent<EnemyGolem>().enabled = true;
+
             yield return new WaitForSeconds(spawnDelay);
         }
     }
 
-
+    /*    void RiseGolem()
+        {
+            for (int i = 1; i < spawnCount + 1; i++)
+            {
+                this.transform.GetChild(i).GetComponent<SphereCollider>().enabled = true;
+                this.transform.GetChild(i).GetComponent<EnemyGolem>().enabled = true;
+               *//* yield return new WaitForSeconds(spawnDelay);*//*
+            }
+        }*/
     IEnumerator SpawnEnemiesAroundPlayer()
     {
         yield return new WaitForSeconds(1f);

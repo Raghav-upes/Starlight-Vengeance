@@ -21,7 +21,8 @@ public class EnemyGolem: MonoBehaviour
     private CapsuleCollider[] ragdollCapsuleColliders;
     private BoxCollider[] ragdollBoxColliders;
 
-
+/*    bool isOkay = false;
+*/
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
@@ -108,10 +109,19 @@ public class EnemyGolem: MonoBehaviour
         }
     }
 
+/*    private void OnTriggerStay(Collider other)
+    {
+        if (!isOkay && other.CompareTag("Player") )
+        {
+            isOkay = true;
+            StartCoroutine(WakeRandom());
+        }
+    }*/
 
     IEnumerator WakeRandom()
     {
         yield return new WaitForSeconds(Random.Range(0,7));
+        Debug.Log(gameObject.name);
 
         isChasingPlayer = true;
         anim.ResetTrigger("Idle");
@@ -120,7 +130,7 @@ public class EnemyGolem: MonoBehaviour
             navMeshAgent.enabled = true;
             anim.SetBool("WakeUp", true);
             PlayAudio(wakeClip);
-            navMeshAgent.speed = 0;
+            navMeshAgent.isStopped = true;
             StartCoroutine(DelayAnimRun());
         }
         else
@@ -198,7 +208,7 @@ public class EnemyGolem: MonoBehaviour
             }
             else if (hp == 0)
             {
-                navMeshAgent.enabled = false;
+                navMeshAgent.speed = 0;
 
                 anim.SetTrigger("Death");
                 anim.ResetTrigger("attackPlayer");
@@ -212,7 +222,7 @@ public class EnemyGolem: MonoBehaviour
     IEnumerator DestroyMe()
     {
         yield return new WaitForSeconds(5f);
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
     IEnumerator runAgain()
     {
