@@ -6,7 +6,7 @@ public class SpawnGolemRandom : MonoBehaviour
 {
     public GameObject enemyPrefab; // Enemy prefab to spawn
     public float minSpawnDistance = 10f; // Minimum spawn distance from the player
-    public float maxSpawnDistance = 20f; // Maximum spawn distance from the player
+    public float maxSpawnDistance = 60f; // Maximum spawn distance from the player
     public float groundOffset = -2f; // Offset to place enemy slightly under the ground
     public int spawnCount = 5; // Number of enemies to spawn
     public Transform spawnAround;
@@ -14,6 +14,7 @@ public class SpawnGolemRandom : MonoBehaviour
 
     public int EnemyDeathCount;
     public GameObject orbSphere;
+    int index = 1;
     private void Start()
     {
         EnemyDeathCount = spawnCount;
@@ -25,32 +26,44 @@ public class SpawnGolemRandom : MonoBehaviour
         {
             
             this.GetComponent<BoxCollider>().enabled = false;
-            StartCoroutine(RiseGolem());
+            RiseGolem();
+            //RiseGolem();
         }
     }
 
 
-    IEnumerator RiseGolem()
-    {
-        for (int i = 1; i < spawnCount + 1; i++)
-        {
-            yield return new WaitForFixedUpdate();
-            this.transform.GetChild(i).GetComponent<SphereCollider>().enabled = true;
-            this.transform.GetChild(i).GetComponent<EnemyGolem>().enabled = true;
-
-            yield return new WaitForSeconds(spawnDelay);
-        }
-    }
-
-    /*    void RiseGolem()
+    /*    IEnumerator RiseGolem()
         {
             for (int i = 1; i < spawnCount + 1; i++)
             {
+                yield return new WaitForFixedUpdate();
                 this.transform.GetChild(i).GetComponent<SphereCollider>().enabled = true;
                 this.transform.GetChild(i).GetComponent<EnemyGolem>().enabled = true;
-               *//* yield return new WaitForSeconds(spawnDelay);*//*
+
+                yield return new WaitForSeconds(spawnDelay);
             }
         }*/
+
+    void RiseGolem()
+    {
+        if (index< spawnCount + 1)
+        {
+            
+            this.transform.GetChild(index).GetComponent<SphereCollider>().enabled = true;
+            this.transform.GetChild(index).GetComponent<EnemyGolem>().enabled = true;
+            this.transform.GetChild(index).GetComponent<EnemyGolem>().WakeRandom();
+            index++;
+            Invoke("RiseGolem", spawnDelay);
+
+      
+        }
+    }
+
+  /*  void Woku()
+    {
+        this.transform.GetChild(index).GetComponent<SphereCollider>().enabled = true;
+        this.transform.GetChild(index).GetComponent<EnemyGolem>().enabled = true;
+    }*/
     IEnumerator SpawnEnemiesAroundPlayer()
     {
         yield return new WaitForSeconds(1f);

@@ -101,13 +101,14 @@ public class EnemyGolem: MonoBehaviour
 
     }
 
-    private void OnTriggerEnter(Collider other)
+/*    private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            StartCoroutine(WakeRandom());
+            *//*        StartCoroutine(WakeRandom());*//*
+            WakeRandom();
         }
-    }
+    }*/
 
 /*    private void OnTriggerStay(Collider other)
     {
@@ -118,10 +119,10 @@ public class EnemyGolem: MonoBehaviour
         }
     }*/
 
-    IEnumerator WakeRandom()
+    public void WakeRandom()
     {
-        yield return new WaitForSeconds(Random.Range(0,7));
-        Debug.Log(gameObject.name);
+/*        yield return new WaitForSeconds(Random.Range(0,7));
+*/        Debug.Log(gameObject.name);
 
         isChasingPlayer = true;
         anim.ResetTrigger("Idle");
@@ -222,11 +223,12 @@ public class EnemyGolem: MonoBehaviour
     IEnumerator DestroyMe()
     {
         yield return new WaitForSeconds(5f);
+        GetComponentInParent<SpawnGolemRandom>().GolemKilled();
         gameObject.SetActive(false);
     }
     IEnumerator runAgain()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1.5f);
         anim.ResetTrigger("hitGolum");
         anim.SetTrigger("Run");
     }
