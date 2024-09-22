@@ -12,7 +12,7 @@ public class SpawnAtRandom : MonoBehaviour
     public float groundOffset = -2f; // Offset to place enemy slightly under the ground
     public int spawnCount = 5; // Number of enemies to spawn
 
-
+    public float spawnDelay;
 
     public int EnemyDeathCount;
     public GameObject orbSphere;
@@ -37,7 +37,7 @@ public class SpawnAtRandom : MonoBehaviour
 
     IEnumerator SpawnEnemiesAroundPlayer()
     {
-         yield return new WaitForSeconds(1f);
+         yield return new WaitForSeconds(3f);
         for (int i = 0; i < spawnCount; i++)
         {
             Vector3 spawnPosition = GetSpawnPosition();
@@ -55,15 +55,17 @@ public class SpawnAtRandom : MonoBehaviour
             }
             // Raycast down to find the ground and adjust enemy's position
             RaycastHit hit;
-
-            while (true)
+            int io = 0;
+            while (io<10)
             {
                  spawnPosition = GetSpawnPosition();
                 if (Physics.Raycast(spawnPosition, Vector3.down, out hit, Mathf.Infinity))
                 {
+                    Debug.LogWarning(hit.collider.name + "900990090909");
                     // Check if we hit the ground
-                    if (hit.collider.CompareTag("Ground") && hit.collider.GetComponentInChildren<NavMeshSurface>()!=null)
+                    if (!hit.collider.CompareTag("Untagged") && !hit.collider.CompareTag("Cliffs") && hit.collider.CompareTag("Ground") && hit.collider.GetComponentInChildren<NavMeshSurface>()!=null)
                     {
+
                         // Set the enemy's Y position to slightly below the ground
                         enemy.transform.position = new Vector3(spawnPosition.x, hit.point.y + groundOffset, spawnPosition.z);
                         enemy.GetComponent<SphereCollider>().enabled = true;
@@ -71,9 +73,13 @@ public class SpawnAtRandom : MonoBehaviour
                         break;
                     }
                 }
+                io++;
             }
-
-            yield return new WaitForSeconds(3f); // Small delay between spawns
+            if(io==10)
+            {
+               StartCoroutine(enemy.GetComponent<CharacterFire>().DestroyMe());
+            }
+            yield return new WaitForSeconds(spawnDelay); // Small delay between spawns
         }
     }
 

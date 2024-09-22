@@ -277,7 +277,7 @@ public class CharacterFire : MonoBehaviour
         StartCoroutine(DestroyMe());
     }
 
-    IEnumerator DestroyMe()
+   public IEnumerator DestroyMe()
     {
         yield return new WaitForSeconds(2.5f);
         GetComponentInParent<SpawnAtRandom>().SpidersKilled();
