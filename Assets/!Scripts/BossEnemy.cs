@@ -18,6 +18,10 @@ public class BossEnemy : MonoBehaviour
 
     private float hp = 75f;
 
+    [SerializeField] private float sandEffectSpeed = 5f;
+    [SerializeField] private float sandEffectLifetime = 3f;
+    private GameObject currentSandEffect;
+    [SerializeField] private GameObject sandEffectPrefab;
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
@@ -54,13 +58,15 @@ public class BossEnemy : MonoBehaviour
         }
         if(distanceToPlayer<20f && distanceToPlayer > 8f)
         {
+            anim.ResetTrigger("tongueAttack");
             anim.ResetTrigger("laserAttack");
             anim.SetTrigger("groundAttack");
+            InstantiateSandEffect();
         }
-        if(distanceToPlayer<=8f)
+        if (distanceToPlayer<=15f)
         {
             anim.ResetTrigger("laserAttack");
-            anim.ResetTrigger("groundAttack");
+            //anim.ResetTrigger("groundAttack");
             anim.SetTrigger("tongueAttack");
         }
     }
@@ -81,6 +87,36 @@ public class BossEnemy : MonoBehaviour
     {
         yield return new WaitForSeconds(4f);
         anim.ResetTrigger("groundAttack");
+    }
+
+    void InstantiateSandEffect()
+    {
+        if (sandEffectPrefab != null)
+        {
+            Vector3 spawnPosition = transform.position + transform.forward * 2f;
+            Quaternion spawnRotation = Quaternion.LookRotation(transform.forward);
+            currentSandEffect = Instantiate(sandEffectPrefab, spawnPosition, spawnRotation);
+            StartCoroutine(MoveAndDestroySandEffect(currentSandEffect));
+        }
+        else
+        {
+            Debug.LogError("Sand effect prefab is not assigned.");
+        }
+    }
+
+    IEnumerator MoveAndDestroySandEffect(GameObject sandEffect)
+    {
+        float elapsedTime = 0f;
+
+        while (elapsedTime < sandEffectLifetime)
+        {
+            sandEffect.transform.Translate(Vector3.forward * sandEffectSpeed * Time.deltaTime);
+
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        Destroy(sandEffect);
+        currentSandEffect = null;
     }
     public void OnChildCollision(GameObject child, Collision collision)
     {
