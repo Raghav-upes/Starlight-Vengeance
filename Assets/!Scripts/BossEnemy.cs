@@ -46,8 +46,8 @@ public class BossEnemy : MonoBehaviour
         }
         if (distanceToPlayer > 20f)
         {
-            anim.SetTrigger("laserAttack");
-            this.GetComponentInChildren<Weapon>().Beam();
+            anim.SetTrigger("groundAttack");
+         /*   this.GetComponentInChildren<Weapon>().Beam();*/
          /*   StartCoroutine(stopbeam());*/
         }
     }

@@ -48,9 +48,23 @@ public class EnemyGolem : MonoBehaviour
 
     public void enableColliders()
     {
-        this.GetComponentInChildren<SphereCollider>().enabled = true;
-        this.GetComponentInChildren<CapsuleCollider>().enabled = true;
-        this.GetComponentInChildren<BoxCollider>().enabled = true;
+        foreach (CapsuleCollider capsuleCollider in ragdollCapsuleColliders)
+        {
+            capsuleCollider.enabled = true;
+
+        }
+
+        foreach (SphereCollider collider in ragdollColliders)
+        {
+            collider.enabled = true;
+
+        }
+
+        foreach (BoxCollider boxCollider in ragdollBoxColliders)
+        {
+            boxCollider.enabled = true;
+
+        }
     }
 
     void Start()

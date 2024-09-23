@@ -6,6 +6,7 @@ public class BossSpawner : MonoBehaviour
 {
     public GameObject FinalBoss;
     public GameObject SpawnPortal;
+    public GameObject Portal;
     void Start()
     {
       /*  Instantiate(FinalBoss, SpawnPortal.transform.position, Quaternion.identity);*/
