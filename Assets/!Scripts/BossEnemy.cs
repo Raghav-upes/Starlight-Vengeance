@@ -46,9 +46,22 @@ public class BossEnemy : MonoBehaviour
         }
         if (distanceToPlayer > 20f)
         {
-            anim.SetTrigger("groundAttack");
+            anim.ResetTrigger("tongueAttack");
+            anim.ResetTrigger("groundAttack");
+            anim.SetTrigger("laserAttack");
          /*   this.GetComponentInChildren<Weapon>().Beam();*/
          /*   StartCoroutine(stopbeam());*/
+        }
+        if(distanceToPlayer<20f && distanceToPlayer > 8f)
+        {
+            anim.ResetTrigger("laserAttack");
+            anim.SetTrigger("groundAttack");
+        }
+        if(distanceToPlayer<=8f)
+        {
+            anim.ResetTrigger("laserAttack");
+            anim.ResetTrigger("groundAttack");
+            anim.SetTrigger("tongueAttack");
         }
     }
     private void OnTriggerEnter(Collider other)
@@ -64,6 +77,11 @@ public class BossEnemy : MonoBehaviour
         yield return new WaitForSeconds(7f);
         this.GetComponentInChildren<Weapon>().StopBeam();
     }
+    IEnumerator stopGroundAttack()
+    {
+        yield return new WaitForSeconds(4f);
+        anim.ResetTrigger("groundAttack");
+    }
     public void OnChildCollision(GameObject child, Collision collision)
     {
         Debug.LogWarning("Collision detected in child: " + child.name);
@@ -73,14 +91,17 @@ public class BossEnemy : MonoBehaviour
             if (child.CompareTag("centre"))
             {
                 hp = hp - 15;
+                anim.SetTrigger("groundAttack");
+                StartCoroutine(stopGroundAttack());
             }
             else
             {
                 hp = hp - 3;
+
             }
             if (hp > 0)
             {
-                anim.SetTrigger("groundAttack");
+                anim.SetTrigger("hitInsideMouth");
             }
             else if (hp <= 0)
             {
