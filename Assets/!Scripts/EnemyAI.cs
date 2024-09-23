@@ -53,16 +53,18 @@ public class EnemyAI : MonoBehaviour
                 if (distanceToPlayer < 7f)
                 {
                     Debug.Log("Spit triggered");
-                    anim.SetTrigger("Spit");
+                    anim.ResetTrigger("Spit");
 
                     StopCoroutine(ShootProjectile());
                 }
 
                 if (distanceToPlayer > 10 && distanceToPlayer < 55 && !isThrowing)
                 {
+                    anim.SetTrigger("Spit");
+
                     StartCoroutine(ShootProjectile());
 
-                        }
+                }
             }
             else
             {

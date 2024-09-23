@@ -1,159 +1,455 @@
 fileFormatVersion: 2
 guid: df70f4956209f114895149d13329e849
 ModelImporter:
-  serializedVersion: 23
-  fileIDToRecycleName:
-    100000: //RootNode
-    100002: Gigalacertus_Head
-    100004: Gigalacertus_Hips
-    100006: Gigalacertus_Jaw
-    100008: Gigalacertus_JawUpperLeft
-    100010: Gigalacertus_JawUpperRight
-    100012: Gigalacertus_LegFrontLeft1
-    100014: Gigalacertus_LegFrontRight1
-    100016: Gigalacertus_LegMiddleLeft1
-    100018: Gigalacertus_LegMiddleLeft2
-    100020: Gigalacertus_LegMiddleRight1
-    100022: Gigalacertus_LegMiddleRight2
-    100024: Gigalacertus_LegRearLeft004
-    100026: Gigalacertus_LegRearLeft1
-    100028: Gigalacertus_LegRearLeft2
-    100030: Gigalacertus_LegRearRight1
-    100032: Gigalacertus_LegRearRight2
-    100034: Gigalacertus_LegRearRight2 1
-    100036: Gigalacertus_Neck1
-    100038: Gigalacertus_Neck2
-    100040: Gigalacertus_RootSpine
-    100042: Gigalacertus_Spine1
-    100044: Gigalacertus_Spine2
-    100046: Gigalacertus_SpitterLeft_A
-    100048: Gigalacertus_SpitterLeft_B
-    100050: Gigalacertus_SpitterLeft_C
-    100052: Gigalacertus_SpitterLeft_D
-    100054: Gigalacertus_SpitterLeft_E
-    100056: Gigalacertus_SpitterLeft_F
-    100058: Gigalacertus_SpitterLeft_G
-    100060: Gigalacertus_SpitterRight_A
-    100062: Gigalacertus_SpitterRight_B
-    100064: Gigalacertus_SpitterRight_C
-    100066: Gigalacertus_SpitterRight_D
-    100068: Gigalacertus_SpitterRight_E
-    100070: Gigalacertus_SpitterRight_F
-    100072: Gigalacertus_SpitterRight_G
-    100074: Gigalacertus_Tail1
-    100076: Gigalacertus_Tail2
-    100078: Gigalacertus_Tail3
-    100080: Gigalacertus_TongueLeft_01
-    100082: Gigalacertus_TongueLeft_010
-    100084: Gigalacertus_TongueLeft_02
-    100086: Gigalacertus_TongueLeft_03
-    100088: Gigalacertus_TongueLeft_04
-    100090: Gigalacertus_TongueLeft_05
-    100092: Gigalacertus_TongueLeft_06
-    100094: Gigalacertus_TongueLeft_07
-    100096: Gigalacertus_TongueLeft_08
-    100098: Gigalacertus_TongueLeft_09
-    100100: Gigalacertus_TongueMiddle_01
-    100102: Gigalacertus_TongueMiddle_010
-    100104: Gigalacertus_TongueMiddle_02
-    100106: Gigalacertus_TongueMiddle_03
-    100108: Gigalacertus_TongueMiddle_04
-    100110: Gigalacertus_TongueMiddle_05
-    100112: Gigalacertus_TongueMiddle_06
-    100114: Gigalacertus_TongueMiddle_07
-    100116: Gigalacertus_TongueMiddle_08
-    100118: Gigalacertus_TongueMiddle_09
-    100120: Gigalacertus_TongueRight_01
-    100122: Gigalacertus_TongueRight_010
-    100124: Gigalacertus_TongueRight_02
-    100126: Gigalacertus_TongueRight_03
-    100128: Gigalacertus_TongueRight_04
-    100130: Gigalacertus_TongueRight_05
-    100132: Gigalacertus_TongueRight_06
-    100134: Gigalacertus_TongueRight_07
-    100136: Gigalacertus_TongueRight_08
-    100138: Gigalacertus_TongueRight_09
-    100140: nub
-    100142: nub 1
-    100144: root
-    400000: //RootNode
-    400002: Gigalacertus_Head
-    400004: Gigalacertus_Hips
-    400006: Gigalacertus_Jaw
-    400008: Gigalacertus_JawUpperLeft
-    400010: Gigalacertus_JawUpperRight
-    400012: Gigalacertus_LegFrontLeft1
-    400014: Gigalacertus_LegFrontRight1
-    400016: Gigalacertus_LegMiddleLeft1
-    400018: Gigalacertus_LegMiddleLeft2
-    400020: Gigalacertus_LegMiddleRight1
-    400022: Gigalacertus_LegMiddleRight2
-    400024: Gigalacertus_LegRearLeft004
-    400026: Gigalacertus_LegRearLeft1
-    400028: Gigalacertus_LegRearLeft2
-    400030: Gigalacertus_LegRearRight1
-    400032: Gigalacertus_LegRearRight2
-    400034: Gigalacertus_LegRearRight2 1
-    400036: Gigalacertus_Neck1
-    400038: Gigalacertus_Neck2
-    400040: Gigalacertus_RootSpine
-    400042: Gigalacertus_Spine1
-    400044: Gigalacertus_Spine2
-    400046: Gigalacertus_SpitterLeft_A
-    400048: Gigalacertus_SpitterLeft_B
-    400050: Gigalacertus_SpitterLeft_C
-    400052: Gigalacertus_SpitterLeft_D
-    400054: Gigalacertus_SpitterLeft_E
-    400056: Gigalacertus_SpitterLeft_F
-    400058: Gigalacertus_SpitterLeft_G
-    400060: Gigalacertus_SpitterRight_A
-    400062: Gigalacertus_SpitterRight_B
-    400064: Gigalacertus_SpitterRight_C
-    400066: Gigalacertus_SpitterRight_D
-    400068: Gigalacertus_SpitterRight_E
-    400070: Gigalacertus_SpitterRight_F
-    400072: Gigalacertus_SpitterRight_G
-    400074: Gigalacertus_Tail1
-    400076: Gigalacertus_Tail2
-    400078: Gigalacertus_Tail3
-    400080: Gigalacertus_TongueLeft_01
-    400082: Gigalacertus_TongueLeft_010
-    400084: Gigalacertus_TongueLeft_02
-    400086: Gigalacertus_TongueLeft_03
-    400088: Gigalacertus_TongueLeft_04
-    400090: Gigalacertus_TongueLeft_05
-    400092: Gigalacertus_TongueLeft_06
-    400094: Gigalacertus_TongueLeft_07
-    400096: Gigalacertus_TongueLeft_08
-    400098: Gigalacertus_TongueLeft_09
-    400100: Gigalacertus_TongueMiddle_01
-    400102: Gigalacertus_TongueMiddle_010
-    400104: Gigalacertus_TongueMiddle_02
-    400106: Gigalacertus_TongueMiddle_03
-    400108: Gigalacertus_TongueMiddle_04
-    400110: Gigalacertus_TongueMiddle_05
-    400112: Gigalacertus_TongueMiddle_06
-    400114: Gigalacertus_TongueMiddle_07
-    400116: Gigalacertus_TongueMiddle_08
-    400118: Gigalacertus_TongueMiddle_09
-    400120: Gigalacertus_TongueRight_01
-    400122: Gigalacertus_TongueRight_010
-    400124: Gigalacertus_TongueRight_02
-    400126: Gigalacertus_TongueRight_03
-    400128: Gigalacertus_TongueRight_04
-    400130: Gigalacertus_TongueRight_05
-    400132: Gigalacertus_TongueRight_06
-    400134: Gigalacertus_TongueRight_07
-    400136: Gigalacertus_TongueRight_08
-    400138: Gigalacertus_TongueRight_09
-    400140: nub
-    400142: nub 1
-    400144: root
-    7400000: HornsLightningAttack
-    9500000: //RootNode
+  serializedVersion: 22200
+  internalIDToNameTable:
+  - first:
+      1: 100000
+    second: //RootNode
+  - first:
+      1: 100002
+    second: Gigalacertus_Head
+  - first:
+      1: 100004
+    second: Gigalacertus_Hips
+  - first:
+      1: 100006
+    second: Gigalacertus_Jaw
+  - first:
+      1: 100008
+    second: Gigalacertus_JawUpperLeft
+  - first:
+      1: 100010
+    second: Gigalacertus_JawUpperRight
+  - first:
+      1: 100012
+    second: Gigalacertus_LegFrontLeft1
+  - first:
+      1: 100014
+    second: Gigalacertus_LegFrontRight1
+  - first:
+      1: 100016
+    second: Gigalacertus_LegMiddleLeft1
+  - first:
+      1: 100018
+    second: Gigalacertus_LegMiddleLeft2
+  - first:
+      1: 100020
+    second: Gigalacertus_LegMiddleRight1
+  - first:
+      1: 100022
+    second: Gigalacertus_LegMiddleRight2
+  - first:
+      1: 100024
+    second: Gigalacertus_LegRearLeft004
+  - first:
+      1: 100026
+    second: Gigalacertus_LegRearLeft1
+  - first:
+      1: 100028
+    second: Gigalacertus_LegRearLeft2
+  - first:
+      1: 100030
+    second: Gigalacertus_LegRearRight1
+  - first:
+      1: 100032
+    second: Gigalacertus_LegRearRight2
+  - first:
+      1: 100034
+    second: Gigalacertus_LegRearRight2 1
+  - first:
+      1: 100036
+    second: Gigalacertus_Neck1
+  - first:
+      1: 100038
+    second: Gigalacertus_Neck2
+  - first:
+      1: 100040
+    second: Gigalacertus_RootSpine
+  - first:
+      1: 100042
+    second: Gigalacertus_Spine1
+  - first:
+      1: 100044
+    second: Gigalacertus_Spine2
+  - first:
+      1: 100046
+    second: Gigalacertus_SpitterLeft_A
+  - first:
+      1: 100048
+    second: Gigalacertus_SpitterLeft_B
+  - first:
+      1: 100050
+    second: Gigalacertus_SpitterLeft_C
+  - first:
+      1: 100052
+    second: Gigalacertus_SpitterLeft_D
+  - first:
+      1: 100054
+    second: Gigalacertus_SpitterLeft_E
+  - first:
+      1: 100056
+    second: Gigalacertus_SpitterLeft_F
+  - first:
+      1: 100058
+    second: Gigalacertus_SpitterLeft_G
+  - first:
+      1: 100060
+    second: Gigalacertus_SpitterRight_A
+  - first:
+      1: 100062
+    second: Gigalacertus_SpitterRight_B
+  - first:
+      1: 100064
+    second: Gigalacertus_SpitterRight_C
+  - first:
+      1: 100066
+    second: Gigalacertus_SpitterRight_D
+  - first:
+      1: 100068
+    second: Gigalacertus_SpitterRight_E
+  - first:
+      1: 100070
+    second: Gigalacertus_SpitterRight_F
+  - first:
+      1: 100072
+    second: Gigalacertus_SpitterRight_G
+  - first:
+      1: 100074
+    second: Gigalacertus_Tail1
+  - first:
+      1: 100076
+    second: Gigalacertus_Tail2
+  - first:
+      1: 100078
+    second: Gigalacertus_Tail3
+  - first:
+      1: 100080
+    second: Gigalacertus_TongueLeft_01
+  - first:
+      1: 100082
+    second: Gigalacertus_TongueLeft_010
+  - first:
+      1: 100084
+    second: Gigalacertus_TongueLeft_02
+  - first:
+      1: 100086
+    second: Gigalacertus_TongueLeft_03
+  - first:
+      1: 100088
+    second: Gigalacertus_TongueLeft_04
+  - first:
+      1: 100090
+    second: Gigalacertus_TongueLeft_05
+  - first:
+      1: 100092
+    second: Gigalacertus_TongueLeft_06
+  - first:
+      1: 100094
+    second: Gigalacertus_TongueLeft_07
+  - first:
+      1: 100096
+    second: Gigalacertus_TongueLeft_08
+  - first:
+      1: 100098
+    second: Gigalacertus_TongueLeft_09
+  - first:
+      1: 100100
+    second: Gigalacertus_TongueMiddle_01
+  - first:
+      1: 100102
+    second: Gigalacertus_TongueMiddle_010
+  - first:
+      1: 100104
+    second: Gigalacertus_TongueMiddle_02
+  - first:
+      1: 100106
+    second: Gigalacertus_TongueMiddle_03
+  - first:
+      1: 100108
+    second: Gigalacertus_TongueMiddle_04
+  - first:
+      1: 100110
+    second: Gigalacertus_TongueMiddle_05
+  - first:
+      1: 100112
+    second: Gigalacertus_TongueMiddle_06
+  - first:
+      1: 100114
+    second: Gigalacertus_TongueMiddle_07
+  - first:
+      1: 100116
+    second: Gigalacertus_TongueMiddle_08
+  - first:
+      1: 100118
+    second: Gigalacertus_TongueMiddle_09
+  - first:
+      1: 100120
+    second: Gigalacertus_TongueRight_01
+  - first:
+      1: 100122
+    second: Gigalacertus_TongueRight_010
+  - first:
+      1: 100124
+    second: Gigalacertus_TongueRight_02
+  - first:
+      1: 100126
+    second: Gigalacertus_TongueRight_03
+  - first:
+      1: 100128
+    second: Gigalacertus_TongueRight_04
+  - first:
+      1: 100130
+    second: Gigalacertus_TongueRight_05
+  - first:
+      1: 100132
+    second: Gigalacertus_TongueRight_06
+  - first:
+      1: 100134
+    second: Gigalacertus_TongueRight_07
+  - first:
+      1: 100136
+    second: Gigalacertus_TongueRight_08
+  - first:
+      1: 100138
+    second: Gigalacertus_TongueRight_09
+  - first:
+      1: 100140
+    second: nub
+  - first:
+      1: 100142
+    second: nub 1
+  - first:
+      1: 100144
+    second: root
+  - first:
+      4: 400000
+    second: //RootNode
+  - first:
+      4: 400002
+    second: Gigalacertus_Head
+  - first:
+      4: 400004
+    second: Gigalacertus_Hips
+  - first:
+      4: 400006
+    second: Gigalacertus_Jaw
+  - first:
+      4: 400008
+    second: Gigalacertus_JawUpperLeft
+  - first:
+      4: 400010
+    second: Gigalacertus_JawUpperRight
+  - first:
+      4: 400012
+    second: Gigalacertus_LegFrontLeft1
+  - first:
+      4: 400014
+    second: Gigalacertus_LegFrontRight1
+  - first:
+      4: 400016
+    second: Gigalacertus_LegMiddleLeft1
+  - first:
+      4: 400018
+    second: Gigalacertus_LegMiddleLeft2
+  - first:
+      4: 400020
+    second: Gigalacertus_LegMiddleRight1
+  - first:
+      4: 400022
+    second: Gigalacertus_LegMiddleRight2
+  - first:
+      4: 400024
+    second: Gigalacertus_LegRearLeft004
+  - first:
+      4: 400026
+    second: Gigalacertus_LegRearLeft1
+  - first:
+      4: 400028
+    second: Gigalacertus_LegRearLeft2
+  - first:
+      4: 400030
+    second: Gigalacertus_LegRearRight1
+  - first:
+      4: 400032
+    second: Gigalacertus_LegRearRight2
+  - first:
+      4: 400034
+    second: Gigalacertus_LegRearRight2 1
+  - first:
+      4: 400036
+    second: Gigalacertus_Neck1
+  - first:
+      4: 400038
+    second: Gigalacertus_Neck2
+  - first:
+      4: 400040
+    second: Gigalacertus_RootSpine
+  - first:
+      4: 400042
+    second: Gigalacertus_Spine1
+  - first:
+      4: 400044
+    second: Gigalacertus_Spine2
+  - first:
+      4: 400046
+    second: Gigalacertus_SpitterLeft_A
+  - first:
+      4: 400048
+    second: Gigalacertus_SpitterLeft_B
+  - first:
+      4: 400050
+    second: Gigalacertus_SpitterLeft_C
+  - first:
+      4: 400052
+    second: Gigalacertus_SpitterLeft_D
+  - first:
+      4: 400054
+    second: Gigalacertus_SpitterLeft_E
+  - first:
+      4: 400056
+    second: Gigalacertus_SpitterLeft_F
+  - first:
+      4: 400058
+    second: Gigalacertus_SpitterLeft_G
+  - first:
+      4: 400060
+    second: Gigalacertus_SpitterRight_A
+  - first:
+      4: 400062
+    second: Gigalacertus_SpitterRight_B
+  - first:
+      4: 400064
+    second: Gigalacertus_SpitterRight_C
+  - first:
+      4: 400066
+    second: Gigalacertus_SpitterRight_D
+  - first:
+      4: 400068
+    second: Gigalacertus_SpitterRight_E
+  - first:
+      4: 400070
+    second: Gigalacertus_SpitterRight_F
+  - first:
+      4: 400072
+    second: Gigalacertus_SpitterRight_G
+  - first:
+      4: 400074
+    second: Gigalacertus_Tail1
+  - first:
+      4: 400076
+    second: Gigalacertus_Tail2
+  - first:
+      4: 400078
+    second: Gigalacertus_Tail3
+  - first:
+      4: 400080
+    second: Gigalacertus_TongueLeft_01
+  - first:
+      4: 400082
+    second: Gigalacertus_TongueLeft_010
+  - first:
+      4: 400084
+    second: Gigalacertus_TongueLeft_02
+  - first:
+      4: 400086
+    second: Gigalacertus_TongueLeft_03
+  - first:
+      4: 400088
+    second: Gigalacertus_TongueLeft_04
+  - first:
+      4: 400090
+    second: Gigalacertus_TongueLeft_05
+  - first:
+      4: 400092
+    second: Gigalacertus_TongueLeft_06
+  - first:
+      4: 400094
+    second: Gigalacertus_TongueLeft_07
+  - first:
+      4: 400096
+    second: Gigalacertus_TongueLeft_08
+  - first:
+      4: 400098
+    second: Gigalacertus_TongueLeft_09
+  - first:
+      4: 400100
+    second: Gigalacertus_TongueMiddle_01
+  - first:
+      4: 400102
+    second: Gigalacertus_TongueMiddle_010
+  - first:
+      4: 400104
+    second: Gigalacertus_TongueMiddle_02
+  - first:
+      4: 400106
+    second: Gigalacertus_TongueMiddle_03
+  - first:
+      4: 400108
+    second: Gigalacertus_TongueMiddle_04
+  - first:
+      4: 400110
+    second: Gigalacertus_TongueMiddle_05
+  - first:
+      4: 400112
+    second: Gigalacertus_TongueMiddle_06
+  - first:
+      4: 400114
+    second: Gigalacertus_TongueMiddle_07
+  - first:
+      4: 400116
+    second: Gigalacertus_TongueMiddle_08
+  - first:
+      4: 400118
+    second: Gigalacertus_TongueMiddle_09
+  - first:
+      4: 400120
+    second: Gigalacertus_TongueRight_01
+  - first:
+      4: 400122
+    second: Gigalacertus_TongueRight_010
+  - first:
+      4: 400124
+    second: Gigalacertus_TongueRight_02
+  - first:
+      4: 400126
+    second: Gigalacertus_TongueRight_03
+  - first:
+      4: 400128
+    second: Gigalacertus_TongueRight_04
+  - first:
+      4: 400130
+    second: Gigalacertus_TongueRight_05
+  - first:
+      4: 400132
+    second: Gigalacertus_TongueRight_06
+  - first:
+      4: 400134
+    second: Gigalacertus_TongueRight_07
+  - first:
+      4: 400136
+    second: Gigalacertus_TongueRight_08
+  - first:
+      4: 400138
+    second: Gigalacertus_TongueRight_09
+  - first:
+      4: 400140
+    second: nub
+  - first:
+      4: 400142
+    second: nub 1
+  - first:
+      4: 400144
+    second: root
+  - first:
+      74: 7400000
+    second: HornsLightningAttack
+  - first:
+      95: 9500000
+    second: //RootNode
   externalObjects: {}
   materials:
-    importMaterials: 1
+    materialImportMode: 1
     materialName: 0
     materialSearch: 1
     materialLocation: 1
@@ -162,6 +458,7 @@ ModelImporter:
     bakeSimulation: 0
     resampleCurves: 1
     optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
     motionNodeName: 
     rigImportErrors: 
     rigImportWarnings: 
@@ -182,6 +479,7 @@ ModelImporter:
     - serializedVersion: 16
       name: HornsLightningAttack
       takeName: Take 001
+      internalID: 0
       firstFrame: 0
       lastFrame: 80
       wrapMode: 0
@@ -214,25 +512,36 @@ ModelImporter:
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importPhysicalCameras: 1
     importVisibility: 1
     importBlendShapes: 1
     importCameras: 1
     importLights: 1
+    nodeNameCollisionStrategy: 0
+    fileIdsGeneration: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
-    optimizeMeshForGPU: 1
     keepQuads: 0
     weldVertices: 1
+    bakeAxisConversion: 0
     preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 0
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
     useFileScale: 1
-    previousCalculatedGlobalScale: 0.01
-    hasPreviousCalculatedGlobalScale: 1
+    strictVertexDataChecks: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
@@ -241,10 +550,10 @@ ModelImporter:
     legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
+  referencedClips: []
   importAnimation: 1
-  copyAvatar: 1
   humanDescription:
-    serializedVersion: 2
+    serializedVersion: 3
     human: []
     skeleton: []
     armTwist: 0.5
@@ -254,14 +563,20 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
+    globalScale: 1
     rootMotionBoneName: root
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: 68b69481f2774e241bb857c8f31710d1,
     type: 3}
+  autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 2
   humanoidOversampling: 1
+  avatarSetup: 2
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 0
+  importBlendShapeDeformPercent: 0
+  remapMaterialsIfMaterialImportModeIsNone: 1
   additionalBone: 0
   userData: 
   assetBundleName: 
