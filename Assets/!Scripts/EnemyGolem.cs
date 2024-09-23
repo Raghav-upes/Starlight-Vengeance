@@ -46,6 +46,13 @@ public class EnemyGolem : MonoBehaviour
         ragdollBoxColliders = GetComponentsInChildren<BoxCollider>();
     }
 
+    public void enableColliders()
+    {
+        this.GetComponentInChildren<SphereCollider>().enabled = true;
+        this.GetComponentInChildren<CapsuleCollider>().enabled = true;
+        this.GetComponentInChildren<BoxCollider>().enabled = true;
+    }
+
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
@@ -58,16 +65,19 @@ public class EnemyGolem : MonoBehaviour
         // Add LimbGollum to the colliders
         foreach (CapsuleCollider capsuleCollider in ragdollCapsuleColliders)
         {
+            capsuleCollider.enabled = false;
             capsuleCollider.gameObject.AddComponent<LimbGollum>();
         }
 
         foreach (SphereCollider collider in ragdollColliders)
         {
+            collider.enabled = false;
             collider.gameObject.AddComponent<LimbGollum>();
         }
 
         foreach (BoxCollider boxCollider in ragdollBoxColliders)
         {
+            boxCollider.enabled = false;
             boxCollider.gameObject.AddComponent<LimbGollum>();
         }
     }

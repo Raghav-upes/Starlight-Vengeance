@@ -27,22 +27,10 @@ public class SpawnGolemRandom : MonoBehaviour
             
             this.GetComponent<BoxCollider>().enabled = false;
             RiseGolem();
-            //RiseGolem();
         }
     }
 
 
-    /*    IEnumerator RiseGolem()
-        {
-            for (int i = 1; i < spawnCount + 1; i++)
-            {
-                yield return new WaitForFixedUpdate();
-                this.transform.GetChild(i).GetComponent<SphereCollider>().enabled = true;
-                this.transform.GetChild(i).GetComponent<EnemyGolem>().enabled = true;
-
-                yield return new WaitForSeconds(spawnDelay);
-            }
-        }*/
 
     void RiseGolem()
     {
@@ -51,6 +39,7 @@ public class SpawnGolemRandom : MonoBehaviour
             
             this.transform.GetChild(index).GetComponent<SphereCollider>().enabled = true;
             this.transform.GetChild(index).GetComponent<EnemyGolem>().enabled = true;
+            this.transform.GetChild(index).GetComponent<EnemyGolem>().enableColliders();
             this.transform.GetChild(index).GetComponent<EnemyGolem>().WakeRandom();
             index++;
             Invoke("RiseGolem", spawnDelay);
@@ -59,11 +48,6 @@ public class SpawnGolemRandom : MonoBehaviour
         }
     }
 
-  /*  void Woku()
-    {
-        this.transform.GetChild(index).GetComponent<SphereCollider>().enabled = true;
-        this.transform.GetChild(index).GetComponent<EnemyGolem>().enabled = true;
-    }*/
     IEnumerator SpawnEnemiesAroundPlayer()
     {
         yield return new WaitForSeconds(1f);
