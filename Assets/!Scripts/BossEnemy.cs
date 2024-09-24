@@ -16,14 +16,20 @@ public class BossEnemy : MonoBehaviour
 
     Animator anim;
 
-    private float hp = 75f;
+    private float hp = 100f;
 
     [SerializeField] private float sandEffectSpeed = 5f;
     [SerializeField] private float sandEffectLifetime = 3f;
     private GameObject currentSandEffect;
+    private GameObject currentFlames;
     [SerializeField] private GameObject sandEffectPrefab;
+
+    [SerializeField] private GameObject flamesEffectPrefab;
+
     bool isSandFormed = false;
 
+
+    bool isFlameThrowing = false;
     private CapsuleCollider[] capsuleColliders;
 
     void Start()
@@ -64,8 +70,8 @@ public class BossEnemy : MonoBehaviour
             anim.ResetTrigger("tongueAttack");
             anim.ResetTrigger("groundAttack");
             anim.SetTrigger("laserAttack");
-         /*   this.GetComponentInChildren<Weapon>().Beam();*/
-         /*   StartCoroutine(stopbeam());*/
+            if(!isFlameThrowing)
+                startLaserAttack();
         }
         if(distanceToPlayer<35f && distanceToPlayer > 30f)
         {
@@ -90,6 +96,22 @@ public class BossEnemy : MonoBehaviour
             GetComponent<Rigidbody>().isKinematic = true;
         }
     }
+    void startLaserAttack()
+    {
+        if (flamesEffectPrefab != null)
+        {
+            isFlameThrowing = true;
+            currentFlames=Instantiate(flamesEffectPrefab, mouthTransform.position, Quaternion.identity);
+        }
+        StartCoroutine(stopLaserAttack(currentFlames));
+    }
+    IEnumerator stopLaserAttack(GameObject obj)
+    {
+        yield return new WaitForSeconds(4f);
+        isFlameThrowing=false;
+        Destroy(obj.gameObject);
+        anim.ResetTrigger("laserAttack");
+    }
     IEnumerator stopGroundAttack()
     {
         yield return new WaitForSeconds(7f);
@@ -104,7 +126,6 @@ public class BossEnemy : MonoBehaviour
             Quaternion spawnRotation = Quaternion.LookRotation(transform.forward);
             currentSandEffect = Instantiate(sandEffectPrefab, spawnPosition, spawnRotation);
             isSandFormed = true;
-            /*            StartCoroutine(MoveAndDestroySandEffect(currentSandEffect));*/
             StartCoroutine(changeSnad(currentSandEffect));
         }
         else
@@ -121,20 +142,6 @@ public class BossEnemy : MonoBehaviour
         Destroy(onj.gameObject);
     }
 
-/*    IEnumerator MoveAndDestroySandEffect(GameObject sandEffect)
-    {
-        float elapsedTime = 0f;
-
-        while (elapsedTime < sandEffectLifetime)
-        {
-            sandEffect.transform.Translate(Vector3.forward * sandEffectSpeed * Time.deltaTime);
-
-            elapsedTime += Time.deltaTime;
-            yield return null;
-        }
-        Destroy(sandEffect);
-        currentSandEffect = null;
-    }*/
     public void OnChildCollision(GameObject child, Collision collision)
     {
         Debug.LogWarning("Collision detected in child: " + child.name);
@@ -143,14 +150,14 @@ public class BossEnemy : MonoBehaviour
         {
             if (child.CompareTag("centre"))
             {
-                hp = hp - 15;
+                hp--;
                 anim.SetTrigger("groundAttack");
                 StartCoroutine(stopGroundAttack());
                 Debug.LogError(hp);
             }
             else
             {
-                hp = hp - 3;
+                hp = hp - 0.5f;
                 Debug.LogError(hp);
 
 
