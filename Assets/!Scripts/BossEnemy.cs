@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UIElements;
 
 public class BossEnemy : MonoBehaviour
 {
@@ -14,16 +15,25 @@ public class BossEnemy : MonoBehaviour
     //private GameObject laserShoot;
     [SerializeField] private float projectileSpeed = 10f;
 
+    public AudioClip screamClip;//Added
+    public AudioClip hurtClip;//Added
+    public AudioClip flameClip;//Added
+    public AudioClip groundClip;//Added
+    private AudioSource audioSource;//Added
+
+    private int numAttack=0;
+
     Animator anim;
 
     private float hp = 100f;
+
+    private ParticleSystem ps;
 
     [SerializeField] private float sandEffectSpeed = 5f;
     [SerializeField] private float sandEffectLifetime = 3f;
     private GameObject currentSandEffect;
     private GameObject currentFlames;
     [SerializeField] private GameObject sandEffectPrefab;
-
     [SerializeField] private GameObject flamesEffectPrefab;
 
     bool isSandFormed = false;
@@ -39,13 +49,15 @@ public class BossEnemy : MonoBehaviour
         foreach (CapsuleCollider capsuleCollider in capsuleColliders)
         {
             capsuleCollider.enabled = true;
-            capsuleCollider.gameObject.AddComponent<LimbGollum>();
+            capsuleCollider.gameObject.AddComponent<LimbBoss>();
         }
 
     }
 
     private void Awake()
     {
+
+        audioSource = GetComponent<AudioSource>();//Added
         anim = GetComponent<Animator>();
         capsuleColliders = GetComponentsInChildren<CapsuleCollider>();
     }
@@ -65,28 +77,63 @@ public class BossEnemy : MonoBehaviour
 
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         }
-        if (distanceToPlayer > 35f)
+        //if (distanceToPlayer > 35f)
+        //{
+        //    anim.ResetTrigger("tongueAttack");
+        //    anim.ResetTrigger("groundAttack");
+        //    //StartCoroutine(delayLaser());
+        //    anim.SetTrigger("laserAttack");
+        //    if (!isFlameThrowing)
+        //    {
+        //        PlayAudio(flameClip, "Flame audio");
+        //        startLaserAttack();
+        //    }
+
+        //}
+        if (distanceToPlayer > 30f)
         {
-            anim.ResetTrigger("tongueAttack");
-            anim.ResetTrigger("groundAttack");
-            anim.SetTrigger("laserAttack");
-            if(!isFlameThrowing)
-                startLaserAttack();
-        }
-        if(distanceToPlayer<35f && distanceToPlayer > 30f)
-        {
-            anim.ResetTrigger("tongueAttack");
-            anim.ResetTrigger("laserAttack");
-            anim.SetTrigger("groundAttack");
-            if(!isSandFormed)
-            InstantiateSandEffect();
+            //StartCoroutine(DelayGroundAttacxk());
+            //if (!isSandFormed)
+            //{
+            //    PlayAudio(groundClip, "Ground audio");
+            //    InstantiateSandEffect(numAttack++);
+            //}
+            StartCoroutine(TriggerGroundAttackSequence());
+            if (!isSandFormed)
+            {
+                PlayAudio(groundClip, "Ground audio");
+                InstantiateSandEffect(numAttack++);
+            }
         }
         if (distanceToPlayer<=30f)
         {
             anim.ResetTrigger("laserAttack");
             anim.ResetTrigger("groundAttack");
             anim.SetTrigger("tongueAttack");
+            PlayAudio(screamClip, "Scream audio");
         }
+    }
+    IEnumerator TriggerGroundAttackSequence()
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            StartCoroutine(DelayGroundAttacxk());
+            anim.SetTrigger("groundAttack");
+            PlayAudio(groundClip, "Ground audio");
+            yield return new WaitForSeconds(2f);
+        }
+        anim.SetTrigger("laserAttack");
+        StartCoroutine(TriggerLaserAttack());
+    }
+    IEnumerator TriggerLaserAttack()
+    {
+        yield return new WaitForSeconds(3f);
+        if (!isFlameThrowing)
+        {
+            PlayAudio(flameClip, "Flame audio");
+            startLaserAttack();
+        }
+        //yield return null; // Just to ensure the coroutine runs
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -96,21 +143,28 @@ public class BossEnemy : MonoBehaviour
             GetComponent<Rigidbody>().isKinematic = true;
         }
     }
+    IEnumerator DelayGroundAttacxk()
+    {
+        yield return new WaitForSeconds(2f);
+        anim.SetTrigger("groundAttack");
+        anim.ResetTrigger("laserAttack");
+    }
     void startLaserAttack()
     {
         if (flamesEffectPrefab != null)
         {
             isFlameThrowing = true;
             currentFlames=Instantiate(flamesEffectPrefab, mouthTransform.position, Quaternion.identity);
+            currentFlames.transform.Rotate(new Vector3(0, Time.deltaTime*rotationSpeed,0));
         }
         StartCoroutine(stopLaserAttack(currentFlames));
     }
     IEnumerator stopLaserAttack(GameObject obj)
     {
-        yield return new WaitForSeconds(4f);
+        anim.ResetTrigger("laserAttack");
+        yield return new WaitForSeconds(2f);
         isFlameThrowing=false;
         Destroy(obj.gameObject);
-        anim.ResetTrigger("laserAttack");
     }
     IEnumerator stopGroundAttack()
     {
@@ -118,7 +172,7 @@ public class BossEnemy : MonoBehaviour
         anim.ResetTrigger("groundAttack");
     }
 
-    void InstantiateSandEffect()
+    void InstantiateSandEffect(int i)
     {
         if (sandEffectPrefab != null)
         {
@@ -132,11 +186,25 @@ public class BossEnemy : MonoBehaviour
         {
             Debug.LogError("Sand effect prefab is not assigned.");
         }
+        if (i%3==0)
+        {
+            anim.SetTrigger("laserAttack");
+            anim.ResetTrigger("groundAttack");
+            anim.ResetTrigger("tongueAttack");
+            if (!isFlameThrowing)
+            {
+                //anim.ResetTrigger("groundAttack");
+                PlayAudio(flameClip, "Flame audio");
+                startLaserAttack();
+            }
+        }
     }
 
     IEnumerator changeSnad(GameObject onj)
     {
-        yield return new WaitForSeconds(15f);
+        yield return new WaitForSeconds(4f);
+        player.GetComponentInChildren<HealthCustom>().StartReducingHealthOverTime();
+        yield return new WaitForSeconds(10f);
         isSandFormed = false;
         yield return new WaitForSeconds(5f);
         Destroy(onj.gameObject);
@@ -151,6 +219,8 @@ public class BossEnemy : MonoBehaviour
             if (child.CompareTag("centre"))
             {
                 hp--;
+                //Added
+                PlayAudio(hurtClip, "Hurt audio");
                 anim.SetTrigger("groundAttack");
                 StartCoroutine(stopGroundAttack());
                 Debug.LogError(hp);
@@ -178,5 +248,16 @@ public class BossEnemy : MonoBehaviour
         this.GetComponent<BossEnemy>().enabled = false;
         this.GetComponentInChildren<LimbBoss>().enabled = false;
     }
-    
+
+    void PlayAudio(AudioClip clip, string clipName)
+    {
+        if (audioSource != null && clip != null)
+        {
+            audioSource.clip = clip;
+            audioSource.Play();
+            Debug.Log($"{clipName} played.");
+        }
+    }
+
+
 }
