@@ -103,6 +103,7 @@ public class BossEnemy : MonoBehaviour
             Vector3 spawnPosition = transform.position + transform.forward * 2f;
             Quaternion spawnRotation = Quaternion.LookRotation(transform.forward);
             currentSandEffect = Instantiate(sandEffectPrefab, spawnPosition, spawnRotation);
+            isSandFormed = true;
             /*            StartCoroutine(MoveAndDestroySandEffect(currentSandEffect));*/
             StartCoroutine(changeSnad(currentSandEffect));
         }
@@ -115,7 +116,7 @@ public class BossEnemy : MonoBehaviour
     IEnumerator changeSnad(GameObject onj)
     {
         yield return new WaitForSeconds(15f);
-        isSandFormed = true;
+        isSandFormed = false;
         yield return new WaitForSeconds(5f);
         Destroy(onj.gameObject);
     }
