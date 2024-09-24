@@ -18,6 +18,7 @@ public class BossSpawner : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.Space))
         {
             Instantiate(FinalBoss,SpawnPortal.transform.position,Quaternion.identity);
+
         }
     }
 

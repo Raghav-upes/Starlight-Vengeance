@@ -11,7 +11,7 @@ public class BossEnemy : MonoBehaviour
     public float rotationSpeed = 5.0f;  // Speed of the Lerp rotation
     public float rotationThreshold = 15f;  // Maximum allowed angle (in degrees)
     private bool isThrowing = false;
-    private GameObject laserShoot;
+    //private GameObject laserShoot;
     [SerializeField] private float projectileSpeed = 10f;
 
     Animator anim;
@@ -22,15 +22,25 @@ public class BossEnemy : MonoBehaviour
     [SerializeField] private float sandEffectLifetime = 3f;
     private GameObject currentSandEffect;
     [SerializeField] private GameObject sandEffectPrefab;
+
+    private CapsuleCollider[] capsuleColliders;
+
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
+
+        foreach (CapsuleCollider capsuleCollider in capsuleColliders)
+        {
+            capsuleCollider.enabled = true;
+            capsuleCollider.gameObject.AddComponent<LimbGollum>();
+        }
+
     }
 
     private void Awake()
     {
         anim = GetComponent<Animator>();
-        laserShoot = Resources.Load<GameObject>("Sphere");
+        capsuleColliders = GetComponentsInChildren<CapsuleCollider>();
     }
 
     void Update()
@@ -78,11 +88,6 @@ public class BossEnemy : MonoBehaviour
             GetComponent<Rigidbody>().isKinematic = true;
         }
     }
-    IEnumerator stopbeam()
-    {
-        yield return new WaitForSeconds(7f);
-        this.GetComponentInChildren<Weapon>().StopBeam();
-    }
     IEnumerator stopGroundAttack()
     {
         yield return new WaitForSeconds(7f);
@@ -129,10 +134,13 @@ public class BossEnemy : MonoBehaviour
                 hp = hp - 15;
                 anim.SetTrigger("groundAttack");
                 StartCoroutine(stopGroundAttack());
+                Debug.LogError(hp);
             }
             else
             {
                 hp = hp - 3;
+                Debug.LogError(hp);
+
 
             }
             if (hp > 0)
@@ -142,33 +150,14 @@ public class BossEnemy : MonoBehaviour
             else if (hp <= 0)
             {
                 anim.SetTrigger("Death");
-                StartCoroutine(DestroyMe());
+                DestroyMe();
             }
         }
     }
-    IEnumerator DestroyMe()
+    void DestroyMe()
     {
-        yield return new WaitForSeconds(5f);
-        Destroy(gameObject);
+        this.GetComponent<BossEnemy>().enabled = false;
+        this.GetComponentInChildren<LimbBoss>().enabled = false;
     }
-    //private IEnumerator shootLaser()
-    //{
-    //    isThrowing = true;
-    //    yield return new WaitForSeconds(2f);
-
-    //    if (laserShoot == null)
-    //    {
-    //        Debug.LogError("Projectile prefab is not assigned or not found in Resources folder.");
-    //        yield return null;
-    //    }
-    //    GameObject laser = Instantiate(laserShoot, mouthTransform.position, mouthTransform.rotation);
-    //    Rigidbody rb = laser.GetComponent<Rigidbody>();
-    //    if (rb != null)
-    //    {
-    //        Vector3 direction = (Camera.main.transform.position - mouthTransform.position).normalized;
-    //        rb.AddForce(direction * projectileSpeed, ForceMode.VelocityChange);
-    //    }
-    //    yield return new WaitForSeconds(5f);
-    //    isThrowing = false;
-    //}
+    
 }
