@@ -37,7 +37,7 @@ public class HealthCustom : MonoBehaviour
         }
         if (other.CompareTag("GollumAttack"))
         {
-            health -= 30;
+            health -= 40;
             UpdateHealthBar();
             UpdateBloodAlpha();
 
