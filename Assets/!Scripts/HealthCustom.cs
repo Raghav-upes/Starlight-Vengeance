@@ -14,7 +14,8 @@ public class HealthCustom : MonoBehaviour
     public float regenDuration = 10.0f;
     private Coroutine regenCoroutine;
 
-    public GameObject[] healthBarCube; 
+    public GameObject[] healthBarCube;
+    private Coroutine reduceHealthCoroutine;
 
     private void Start()
     {
@@ -114,6 +115,7 @@ public class HealthCustom : MonoBehaviour
             }
 
             parentTransform.rotation = targetRotation;
+            if(GameObject.FindGameObjectWithTag("Locomotion")!=null)
             GameObject.FindGameObjectWithTag("Locomotion").gameObject.SetActive(false);
             this.GetComponentInParent<CharacterController>().enabled = false;
         }
@@ -141,5 +143,41 @@ public class HealthCustom : MonoBehaviour
         UpdateHealthBar(); 
         UpdateBloodAlpha();
         isRegenerating = false;
+    }
+
+
+    private IEnumerator ReduceHealthOverTime()
+    {
+        while (health > 0)
+        {
+            yield return null;
+
+            health -= Mathf.CeilToInt(health * 0.0005f); // Reduce health by 10%
+
+            UpdateHealthBar();  // Update health bar UI
+            UpdateBloodAlpha(); // Update blood overlay
+
+        }
+        health = 0;
+        this.GetComponent<CapsuleCollider>().enabled = false;
+        StartCoroutine(RotateParentOverTime());
+    }
+
+    public void StartReducingHealthOverTime()
+    {
+        if (reduceHealthCoroutine != null)
+        {
+            StopCoroutine(reduceHealthCoroutine);
+        }
+
+        reduceHealthCoroutine = StartCoroutine(ReduceHealthOverTime());
+    }
+
+    public void StopReducingHealthOverTime()
+    {
+        if (reduceHealthCoroutine != null)
+        {
+            StopCoroutine(reduceHealthCoroutine);
+        }
     }
 }

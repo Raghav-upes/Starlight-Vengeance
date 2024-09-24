@@ -31,7 +31,8 @@ public class OrbShooter : MonoBehaviour
     {
         Player = GameObject.FindGameObjectWithTag("Player");
         originalScale = new Vector3(3.6f, 3.6f, 3.6f);
-        Player.GetComponentInChildren<HealthCustom>().gameObject.GetComponent<CapsuleCollider>().enabled = false;
+        Player.GetComponentInChildren<HealthCustom>().StopReducingHealthOverTime();
+        Player.GetComponentInChildren<HealthCustom>().enabled = false;
         StartCoroutine(ScaleCanvas(originalScale, Vector3.zero));
         
     }
@@ -50,7 +51,7 @@ public class OrbShooter : MonoBehaviour
         }
         this.transform.localScale = to;
         isAnimating = false;
-        Player.GetComponentInChildren<HealthCustom>().gameObject.GetComponent<CapsuleCollider>().enabled = true;
+        Player.GetComponentInChildren<HealthCustom>().enabled = true;
         onComplete?.Invoke();
     }
 }
