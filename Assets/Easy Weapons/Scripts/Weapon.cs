@@ -124,8 +124,8 @@ public class Weapon : MonoBehaviour
 	public Color beamColor = Color.red;					// The color that will be used to tint the beam material
 	public float startBeamWidth = 0.5f;					// The width of the beam on the starting side
 	public float endBeamWidth = 1.0f;					// The width of the beam on the ending side
-	private float beamHeat = 0.0f;						// Timer to keep track of beam warmup and cooldown
-	private bool coolingDown = false;					// Whether or not the beam weapon is currently cooling off.  This is used to make sure the weapon isn't fired when it's too close to the maximum heat level
+	public float beamHeat = 0.0f;						// Timer to keep track of beam warmup and cooldown
+	public bool coolingDown = false;					// Whether or not the beam weapon is currently cooling off.  This is used to make sure the weapon isn't fired when it's too close to the maximum heat level
 	public GameObject beamGO;							// The reference to the instantiated beam GameObject
 	private bool beaming = false;						// Whether or not the weapon is currently firing a beam - used to make sure StopBeam() is called after the beam is no longer being fired
 
@@ -1062,16 +1062,19 @@ public class Weapon : MonoBehaviour
 		// Make the beam effect if it hasn't already been made.  This system uses a line renderer on an otherwise empty instantiated GameObject
 		if (beamGO == null)
 		{
+
 			beamGO = new GameObject(beamTypeName, typeof(LineRenderer));
-			beamGO.transform.parent = transform;		// Make the beam object a child of the weapon object, so that when the weapon is deactivated the beam will be as well	- was beamGO.transform.SetParent(transform), which only works in Unity 4.6 or newer;
-		}
+			beamGO.transform.parent = transform;        // Make the beam object a child of the weapon object, so that when the weapon is deactivated the beam will be as well	- was beamGO.transform.SetParent(transform), which only works in Unity 4.6 or newer;
+            Debug.Log(beamGO.transform.parent.name+" "+beamGO.name);
+        }
 		LineRenderer beamLR = beamGO.GetComponent<LineRenderer>();
 		beamLR.material = beamMaterial;
 		beamLR.material.SetColor("_TintColor", beamColor);
-		beamLR.SetWidth(startBeamWidth, endBeamWidth);
+		beamLR.startWidth=startBeamWidth;
+		beamLR.endWidth=endBeamWidth;
 
-		// The number of reflections
-		int reflections = 0;
+        // The number of reflections
+        int reflections = 0;
 
 		// All the points at which the laser is reflected
 		List<Vector3> reflectionPoints = new List<Vector3>();
@@ -1168,8 +1171,8 @@ public class Weapon : MonoBehaviour
 
 		} while (keepReflecting && reflections < maxReflections && reflect && (reflectionMaterial == null || (FindMeshRenderer(hit.collider.gameObject) != null && FindMeshRenderer(hit.collider.gameObject).sharedMaterial == reflectionMaterial)));
 
-		// Set the positions of the vertices of the line renderer beam
-		beamLR.SetVertexCount(reflectionPoints.Count);
+        // Set the positions of the vertices of the line renderer beam
+        beamLR.positionCount=(reflectionPoints.Count);
 		for (int i = 0; i < reflectionPoints.Count; i++)
 		{
 			beamLR.SetPosition(i, reflectionPoints[i]);

@@ -22,6 +22,7 @@ public class BossEnemy : MonoBehaviour
     [SerializeField] private float sandEffectLifetime = 3f;
     private GameObject currentSandEffect;
     [SerializeField] private GameObject sandEffectPrefab;
+    bool isSandFormed = false;
 
     private CapsuleCollider[] capsuleColliders;
 
@@ -71,6 +72,7 @@ public class BossEnemy : MonoBehaviour
             anim.ResetTrigger("tongueAttack");
             anim.ResetTrigger("laserAttack");
             anim.SetTrigger("groundAttack");
+            if(!isSandFormed)
             InstantiateSandEffect();
         }
         if (distanceToPlayer<=30f)
@@ -101,7 +103,8 @@ public class BossEnemy : MonoBehaviour
             Vector3 spawnPosition = transform.position + transform.forward * 2f;
             Quaternion spawnRotation = Quaternion.LookRotation(transform.forward);
             currentSandEffect = Instantiate(sandEffectPrefab, spawnPosition, spawnRotation);
-            StartCoroutine(MoveAndDestroySandEffect(currentSandEffect));
+            /*            StartCoroutine(MoveAndDestroySandEffect(currentSandEffect));*/
+            StartCoroutine(changeSnad(currentSandEffect));
         }
         else
         {
@@ -109,7 +112,15 @@ public class BossEnemy : MonoBehaviour
         }
     }
 
-    IEnumerator MoveAndDestroySandEffect(GameObject sandEffect)
+    IEnumerator changeSnad(GameObject onj)
+    {
+        yield return new WaitForSeconds(15f);
+        isSandFormed = true;
+        yield return new WaitForSeconds(5f);
+        Destroy(onj.gameObject);
+    }
+
+/*    IEnumerator MoveAndDestroySandEffect(GameObject sandEffect)
     {
         float elapsedTime = 0f;
 
@@ -122,7 +133,7 @@ public class BossEnemy : MonoBehaviour
         }
         Destroy(sandEffect);
         currentSandEffect = null;
-    }
+    }*/
     public void OnChildCollision(GameObject child, Collision collision)
     {
         Debug.LogWarning("Collision detected in child: " + child.name);

@@ -52,20 +52,20 @@ public class WeaponSpawner : MonoBehaviour
                 {
                     if (isButtonPressed && !isButtonPreviouslyPressed)
                     {
-                        GameObject op=Instantiate(Weapon,other.transform.position,other.transform.parent.rotation);
-                      /*  if(op.GetComponent<Weapon>()!=null)
-                        {
-                            op.GetComponent<Weapon>().enabled = true;
-                        }*/
-                        op.GetComponent<XRGrabInteractable>().enabled = true;
-                        op.GetComponent<Rigidbody>().useGravity = true;
-                        op.GetComponent<Rigidbody>().isKinematic = false;
-
-                        op.transform.localScale = new Vector3(scale, scale, scale);
-                        /*other.GetComponentInParent<XRDirectInteractor>().startingSelectedInteractable = op.GetComponent<XRGrabInteractable>();*/
                         XRDirectInteractor interactor = other.GetComponentInParent<XRDirectInteractor>();
-                        if (interactor != null)
+
+                        // Check if the interactor is already holding an object
+                        if (interactor != null && !interactor.hasSelection)
                         {
+                            GameObject op = Instantiate(Weapon, other.transform.position, other.transform.parent.rotation);
+
+                            op.GetComponent<XRGrabInteractable>().enabled = true;
+                            op.GetComponent<Rigidbody>().useGravity = true;
+                            op.GetComponent<Rigidbody>().isKinematic = false;
+
+                            op.transform.localScale = new Vector3(scale, scale, scale);
+
+                            // Perform SelectEnter only if the interactor is not holding an object
                             interactor.interactionManager.SelectEnter(interactor, op.GetComponent<XRGrabInteractable>());
                         }
                     }
@@ -74,6 +74,7 @@ public class WeaponSpawner : MonoBehaviour
             }
         }
     }
+
 
     private void ToggleWeapon()
     {

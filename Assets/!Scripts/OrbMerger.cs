@@ -37,6 +37,10 @@ public class OrbMerger : MonoBehaviour
             {
                 orb.GetComponentInParent<PurifyTower>().purify();
             }
+            if (orb.GetComponentInParent<ShieldActiavte>() != null)
+            {
+               orb.GetComponentInParent<ShieldActiavte>().ActivateShield();
+            }
             orb.transform.localScale = other.GetComponent<OrbSizeDefine>().mySize;
             orb.transform.localPosition = Vector3.zero;
             this.GetComponentInParent<OrbFormation>().StopAnim(LeftHand);

@@ -64,7 +64,7 @@ public class PurifyTower : MonoBehaviour
                     materials[0] = greenMat;
                     eyeRenderer.materials = materials;
                     ToBeNectTower.GetComponent<BoxCollider>().enabled=(true);
-                    ToBeNectTower.GetComponentInChildren<Canvas>().gameObject.SetActive(true);
+                    ToBeNectTower.transform.GetChild(0).GetComponentInChildren<Canvas>().gameObject.SetActive(true);
                     NextGunToBeUnlock.SetActive(true);
                     NextGunParentToBeUnlock.GetComponent<BoxCollider>().enabled = true;
                     NextGunParentToBeUnlock.GetComponent<WeaponSpawner>().enabled = true;
