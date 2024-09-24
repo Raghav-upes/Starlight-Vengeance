@@ -5,7 +5,13 @@ public class OrbShooter : MonoBehaviour
 {
     private bool isAnimating;
     public Vector3 originalScale;
-    public float animationDuration = 0.3f;
+    private float animationDuration = 7f;
+    GameObject Player;
+
+    private void Start()
+    {
+
+    }
 
     public void ChangeOrb(int currentAmmo,int ammoCapacity)
     {
@@ -21,9 +27,13 @@ public class OrbShooter : MonoBehaviour
     }
 
 
-    public void ChangeOrb()
+    public void ShieldTimeStart()
     {
-
+        Player = GameObject.FindGameObjectWithTag("Player");
+        originalScale = new Vector3(3.6f, 3.6f, 3.6f);
+        Player.GetComponentInChildren<HealthCustom>().gameObject.GetComponent<CapsuleCollider>().enabled = false;
+        StartCoroutine(ScaleCanvas(originalScale, Vector3.zero));
+        
     }
 
 
@@ -40,6 +50,7 @@ public class OrbShooter : MonoBehaviour
         }
         this.transform.localScale = to;
         isAnimating = false;
+        Player.GetComponentInChildren<HealthCustom>().gameObject.GetComponent<CapsuleCollider>().enabled = true;
         onComplete?.Invoke();
     }
 }

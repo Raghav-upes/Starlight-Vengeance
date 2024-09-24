@@ -24,13 +24,23 @@ public class ShieldActiavte : MonoBehaviour
 
     public IEnumerator ActivateShieldop()
     {
-        StartCoroutine(ScaleCanvas(Vector3.zero, originalScale));
+        StartCoroutine(ScaleCanvas(Vector3.zero, originalScale, () =>
+        {
+            shield.SetActive(true);
+        }));
         yield return new WaitForSeconds(7f);
         StartCoroutine(ScaleCanvas(originalScale, Vector3.zero));
     }
     public void ActivateShield()
     {
         StartCoroutine(ActivateShieldop());
+    }
+
+
+    public IEnumerator DeactivateShield()
+    {
+        yield return new WaitForSeconds(7f);
+        StartCoroutine(ScaleCanvas(originalScale, Vector3.zero));
     }
     private System.Collections.IEnumerator ScaleCanvas(Vector3 from, Vector3 to, System.Action onComplete = null)
     {

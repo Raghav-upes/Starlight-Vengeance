@@ -47,6 +47,18 @@ public class HealthCustom : MonoBehaviour
                 isRegenerating = false;
             }
         }
+        if (other.CompareTag("BossAttack"))
+        {
+            health -= 100;
+            UpdateHealthBar();
+            UpdateBloodAlpha();
+
+            if (regenCoroutine != null)
+            {
+                StopCoroutine(regenCoroutine);
+                isRegenerating = false;
+            }
+        }
         if (health <= 0)
         {
             this.GetComponent<CapsuleCollider>().enabled = false;
