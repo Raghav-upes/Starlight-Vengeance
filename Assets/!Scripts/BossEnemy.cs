@@ -12,6 +12,7 @@ public class BossEnemy : MonoBehaviour
     public float rotationSpeed = 5.0f;  // Speed of the Lerp rotation
     public float rotationThreshold = 15f;  // Maximum allowed angle (in degrees)
     private bool isThrowing = false;
+    private bool sequenceActive=false;
     //private GameObject laserShoot;
     [SerializeField] private float projectileSpeed = 10f;
 
@@ -77,32 +78,17 @@ public class BossEnemy : MonoBehaviour
 
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         }
-        //if (distanceToPlayer > 35f)
-        //{
-        //    anim.ResetTrigger("tongueAttack");
-        //    anim.ResetTrigger("groundAttack");
-        //    //StartCoroutine(delayLaser());
-        //    anim.SetTrigger("laserAttack");
-        //    if (!isFlameThrowing)
-        //    {
-        //        PlayAudio(flameClip, "Flame audio");
-        //        startLaserAttack();
-        //    }
-
-        //}
-        if (distanceToPlayer > 30f)
+        
+        if (distanceToPlayer<40f && distanceToPlayer > 30f)
         {
-            //StartCoroutine(DelayGroundAttacxk());
-            //if (!isSandFormed)
-            //{
-            //    PlayAudio(groundClip, "Ground audio");
-            //    InstantiateSandEffect(numAttack++);
-            //}
-            StartCoroutine(TriggerGroundAttackSequence());
-            if (!isSandFormed)
+            if (!sequenceActive)
             {
-                PlayAudio(groundClip, "Ground audio");
-                InstantiateSandEffect(numAttack++);
+                StartCoroutine(TriggerGroundAttackSequence());
+                    if (!isSandFormed)
+                    {
+                        PlayAudio(groundClip, "Ground audio");
+                        InstantiateSandEffect();
+                    } 
             }
         }
         if (distanceToPlayer<=30f)
@@ -115,6 +101,7 @@ public class BossEnemy : MonoBehaviour
     }
     IEnumerator TriggerGroundAttackSequence()
     {
+        sequenceActive=true;
         for (int i = 0; i < 3; i++)
         {
             StartCoroutine(DelayGroundAttacxk());
@@ -122,12 +109,12 @@ public class BossEnemy : MonoBehaviour
             PlayAudio(groundClip, "Ground audio");
             yield return new WaitForSeconds(2f);
         }
-        anim.SetTrigger("laserAttack");
         StartCoroutine(TriggerLaserAttack());
     }
     IEnumerator TriggerLaserAttack()
     {
-        yield return new WaitForSeconds(3f);
+        anim.SetTrigger("laserAttack");
+        yield return new WaitForSeconds(1f);
         if (!isFlameThrowing)
         {
             PlayAudio(flameClip, "Flame audio");
@@ -151,19 +138,21 @@ public class BossEnemy : MonoBehaviour
     }
     void startLaserAttack()
     {
+        Vector3 direction = player.position - transform.position;
+        direction.y = 0;
         if (flamesEffectPrefab != null)
         {
             isFlameThrowing = true;
-            currentFlames=Instantiate(flamesEffectPrefab, mouthTransform.position, Quaternion.identity);
-            currentFlames.transform.Rotate(new Vector3(0, Time.deltaTime*rotationSpeed,0));
+            currentFlames=Instantiate(flamesEffectPrefab, mouthTransform.position, Quaternion.LookRotation(direction));
         }
         StartCoroutine(stopLaserAttack(currentFlames));
     }
     IEnumerator stopLaserAttack(GameObject obj)
     {
         anim.ResetTrigger("laserAttack");
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(4f);
         isFlameThrowing=false;
+        sequenceActive = false;
         Destroy(obj.gameObject);
     }
     IEnumerator stopGroundAttack()
@@ -172,7 +161,7 @@ public class BossEnemy : MonoBehaviour
         anim.ResetTrigger("groundAttack");
     }
 
-    void InstantiateSandEffect(int i)
+    void InstantiateSandEffect()
     {
         if (sandEffectPrefab != null)
         {
@@ -185,18 +174,6 @@ public class BossEnemy : MonoBehaviour
         else
         {
             Debug.LogError("Sand effect prefab is not assigned.");
-        }
-        if (i%3==0)
-        {
-            anim.SetTrigger("laserAttack");
-            anim.ResetTrigger("groundAttack");
-            anim.ResetTrigger("tongueAttack");
-            if (!isFlameThrowing)
-            {
-                //anim.ResetTrigger("groundAttack");
-                PlayAudio(flameClip, "Flame audio");
-                startLaserAttack();
-            }
         }
     }
 
