@@ -79,7 +79,7 @@ public class BossEnemy : MonoBehaviour
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         }
         
-        if (distanceToPlayer<40f && distanceToPlayer > 30f)
+        if (distanceToPlayer<80f && distanceToPlayer > 30f)
         {
             if (!sequenceActive)
             {
@@ -143,7 +143,7 @@ public class BossEnemy : MonoBehaviour
         if (flamesEffectPrefab != null)
         {
             isFlameThrowing = true;
-            currentFlames=Instantiate(flamesEffectPrefab, mouthTransform.position, Quaternion.LookRotation(direction));
+            currentFlames=Instantiate(flamesEffectPrefab, mouthTransform.position, mouthTransform.rotation);
         }
         StartCoroutine(stopLaserAttack(currentFlames));
     }
@@ -206,8 +206,6 @@ public class BossEnemy : MonoBehaviour
             {
                 hp = hp - 0.5f;
                 Debug.LogError(hp);
-
-
             }
             if (hp > 0)
             {

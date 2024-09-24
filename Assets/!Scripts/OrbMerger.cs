@@ -30,11 +30,11 @@ public class OrbMerger : MonoBehaviour
     {
         if (other.CompareTag("Orb"))
         {
-            bool morechild = false;
+
             if (other.transform.childCount > 0)
             {
                 Destroy(other.transform.GetChild(0).gameObject);
-                morechild = true;
+              
             }
             GameObject orb = Instantiate(this.gameObject, other.transform);
             if (orb.GetComponentInParent<PurifyTower>() != null)
@@ -46,14 +46,9 @@ public class OrbMerger : MonoBehaviour
             {
                 orb.GetComponent<OrbShooter>().ShieldTimeStart();
 
-                if (!morechild)
-                {
+               
                     orb.GetComponentInParent<ShieldActiavte>().ActivateShield();
-                }
-                else
-                {
-                    orb.GetComponentInParent<ShieldActiavte>().DeactivateShield();
-                }
+                
             }
             orb.transform.localScale = other.GetComponent<OrbSizeDefine>().mySize;
             orb.transform.localPosition = Vector3.zero;

@@ -33,6 +33,7 @@ public class OrbShooter : MonoBehaviour
         originalScale = new Vector3(3.6f, 3.6f, 3.6f);
         Player.GetComponentInChildren<HealthCustom>().StopReducingHealthOverTime();
         Player.GetComponentInChildren<HealthCustom>().enabled = false;
+        Player.GetComponentInChildren<CapsuleCollider>().enabled = false;
         StartCoroutine(ScaleCanvas(originalScale, Vector3.zero));
         
     }
@@ -52,6 +53,7 @@ public class OrbShooter : MonoBehaviour
         this.transform.localScale = to;
         isAnimating = false;
         Player.GetComponentInChildren<HealthCustom>().enabled = true;
+        Player.GetComponentInChildren<CapsuleCollider>().enabled = true;
         onComplete?.Invoke();
     }
 }

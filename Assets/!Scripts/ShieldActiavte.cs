@@ -24,11 +24,13 @@ public class ShieldActiavte : MonoBehaviour
 
     public IEnumerator ActivateShieldop()
     {
+      this.GetComponentInChildren<SphereCollider>().enabled = false;
         StartCoroutine(ScaleCanvas(Vector3.zero, originalScale, () =>
         {
             shield.SetActive(true);
         }));
         yield return new WaitForSeconds(7f);
+      this.GetComponentInChildren<SphereCollider>().enabled = true;
         StartCoroutine(ScaleCanvas(originalScale, Vector3.zero));
     }
     public void ActivateShield()
