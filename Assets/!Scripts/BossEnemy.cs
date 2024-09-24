@@ -48,7 +48,7 @@ public class BossEnemy : MonoBehaviour
 
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         }
-        if (distanceToPlayer > 20f)
+        if (distanceToPlayer > 35f)
         {
             anim.ResetTrigger("tongueAttack");
             anim.ResetTrigger("groundAttack");
@@ -56,17 +56,17 @@ public class BossEnemy : MonoBehaviour
          /*   this.GetComponentInChildren<Weapon>().Beam();*/
          /*   StartCoroutine(stopbeam());*/
         }
-        if(distanceToPlayer<20f && distanceToPlayer > 8f)
+        if(distanceToPlayer<35f && distanceToPlayer > 30f)
         {
             anim.ResetTrigger("tongueAttack");
             anim.ResetTrigger("laserAttack");
             anim.SetTrigger("groundAttack");
             InstantiateSandEffect();
         }
-        if (distanceToPlayer<=15f)
+        if (distanceToPlayer<=30f)
         {
             anim.ResetTrigger("laserAttack");
-            //anim.ResetTrigger("groundAttack");
+            anim.ResetTrigger("groundAttack");
             anim.SetTrigger("tongueAttack");
         }
     }
@@ -85,7 +85,7 @@ public class BossEnemy : MonoBehaviour
     }
     IEnumerator stopGroundAttack()
     {
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(7f);
         anim.ResetTrigger("groundAttack");
     }
 
