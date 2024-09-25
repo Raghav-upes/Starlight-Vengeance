@@ -1,17 +1,19 @@
 using System.Collections;
+using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.InputSystem.HID;
 
 public class EnemyGolem : MonoBehaviour
 {
+
     private Transform player;
     private AudioSource audioSource;
-
     [Header("Audio Clips")]
     public AudioClip wakeClip;
     public AudioClip step1Clip;
     public AudioClip step2Clip;
-    public AudioClip hitclip;
 
     private float hp = 6f;
 
@@ -19,6 +21,28 @@ public class EnemyGolem : MonoBehaviour
     private CapsuleCollider[] ragdollCapsuleColliders;
     private BoxCollider[] ragdollBoxColliders;
 
+    /*    bool isOkay = false;
+    */
+    void Start()
+    {
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+
+        foreach (CapsuleCollider capsuleCollider in ragdollCapsuleColliders)
+        {
+            capsuleCollider.gameObject.AddComponent<LimbGollum>();
+        }
+
+
+        foreach (SphereCollider collider in ragdollColliders)
+        {
+            collider.gameObject.AddComponent<LimbGollum>();
+        }
+
+        foreach (BoxCollider boxcollider in ragdollBoxColliders)
+        {
+            boxcollider.gameObject.AddComponent<LimbGollum>();
+        }
+    }
     private NavMeshAgent navMeshAgent;
     private bool isChasingPlayer = false;
     public float distanceTriggerOutZone;
@@ -27,79 +51,21 @@ public class EnemyGolem : MonoBehaviour
 
     float distanceToPlayer;
     private bool isThrowing = false;
-    private bool isRunning = false;
-
     private void Awake()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
         enemySpeed = navMeshAgent.speed;
-        audioSource = GetComponent<AudioSource>();
-        if (audioSource == null)
-        {
-            Debug.LogError("No AudioSource component found on the GameObject.");
-        }
+        audioSource = gameObject.GetComponent<AudioSource>();
 
-        // Retrieve all child colliders
         ragdollColliders = GetComponentsInChildren<SphereCollider>();
         ragdollCapsuleColliders = GetComponentsInChildren<CapsuleCollider>();
         ragdollBoxColliders = GetComponentsInChildren<BoxCollider>();
     }
 
-    public void enableColliders()
-    {
-        foreach (CapsuleCollider capsuleCollider in ragdollCapsuleColliders)
-        {
-            capsuleCollider.enabled = true;
-
-        }
-
-        foreach (SphereCollider collider in ragdollColliders)
-        {
-            collider.enabled = true;
-
-        }
-
-        foreach (BoxCollider boxCollider in ragdollBoxColliders)
-        {
-            boxCollider.enabled = true;
-
-        }
-    }
-
-    void Start()
-    {
-        player = GameObject.FindGameObjectWithTag("Player")?.transform;
-
-        if (player == null)
-        {
-            Debug.LogError("Player not found in the scene.");
-        }
-
-        // Add LimbGollum to the colliders
-        foreach (CapsuleCollider capsuleCollider in ragdollCapsuleColliders)
-        {
-            capsuleCollider.enabled = false;
-            capsuleCollider.gameObject.AddComponent<LimbGollum>();
-        }
-
-        foreach (SphereCollider collider in ragdollColliders)
-        {
-            collider.enabled = false;
-            collider.gameObject.AddComponent<LimbGollum>();
-        }
-
-        foreach (BoxCollider boxCollider in ragdollBoxColliders)
-        {
-            boxCollider.enabled = false;
-            boxCollider.gameObject.AddComponent<LimbGollum>();
-        }
-    }
 
     private void Update()
     {
-        if (player == null) return;
-
         distanceToPlayer = Vector3.Distance(transform.position, player.position);
         if (navMeshAgent.enabled)
         {
@@ -111,26 +77,17 @@ public class EnemyGolem : MonoBehaviour
                 if (distanceToPlayer < 5f)
                 {
                     anim.SetTrigger("attackPlayer");
-                    PlayAudio(hitclip);
                     StopCoroutine(runAgain());
-                    StopRunningSounds();
                 }
                 else
                 {
                     StartCoroutine(runAgain());
-
-                    if (!isRunning)
-                    {
-                        StartRunningSounds();
-                    }
                 }
             }
             else
             {
                 navMeshAgent.isStopped = true;
-                StopRunningSounds();
             }
-
             if (distanceToPlayer > distanceTriggerOutZone)
             {
                 isChasingPlayer = false;
@@ -138,132 +95,141 @@ public class EnemyGolem : MonoBehaviour
             else
             {
                 isChasingPlayer = true;
+
             }
         }
+
     }
 
-    private void StartRunningSounds()
-    {
-        isRunning = true;
-        StartCoroutine(PlayStepSounds());
-    }
-
-    private void StopRunningSounds()
-    {
-        isRunning = false;
-        StopCoroutine(PlayStepSounds());
-    }
-
-
-
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
+    /*    private void OnTriggerEnter(Collider other)
         {
-            StartCoroutine(WakeRandom());
-        }
-    }
+            if (other.CompareTag("Player"))
+            {
+                //        StartCoroutine(WakeRandom());//
+                WakeRandom();
+            }
+        }*/
 
-    public IEnumerator WakeRandom()
+    /*    private void OnTriggerStay(Collider other)
+        {
+            if (!isOkay && other.CompareTag("Player") )
+            {
+                isOkay = true;
+                StartCoroutine(WakeRandom());
+            }
+        }*/
+
+    public void WakeRandom()
     {
-        yield return new WaitForSeconds(Random.Range(0, 7));
+        /*        yield return new WaitForSeconds(Random.Range(0,7));
+        */
+        Debug.Log(gameObject.name);
 
         isChasingPlayer = true;
         anim.ResetTrigger("Idle");
-
         if (!anim.GetBool("WakeUp"))
         {
             navMeshAgent.enabled = true;
             anim.SetBool("WakeUp", true);
             PlayAudio(wakeClip);
-            navMeshAgent.speed = 0;
+            navMeshAgent.isStopped = true;
             StartCoroutine(DelayAnimRun());
         }
         else
         {
             anim.SetTrigger("Run");
-            StartCoroutine(PlayStepSounds());
+            PlayAudio(step1Clip);
+            PlayAudio(step2Clip);
         }
 
-        GetComponent<SphereCollider>().radius = distanceTriggerOutZone;
+
+
+        this.GetComponent<SphereCollider>().radius = distanceTriggerOutZone;
     }
 
     IEnumerator DelayAnimRun()
     {
         yield return new WaitForSeconds(0.3f);
         anim.SetTrigger("Run");
-        StartCoroutine(PlayStepSounds());
+        PlayAudio(step1Clip);
+        PlayAudio(step2Clip);
         navMeshAgent.speed = enemySpeed;
     }
+
 
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
         {
+
             isChasingPlayer = false;
             anim.SetTrigger("Idle");
             anim.ResetTrigger("Run");
         }
     }
 
+
     public void PlayAudio(AudioClip clip)
     {
         if (audioSource != null && clip != null)
         {
-            Debug.Log("Playing audio: " + clip.name);
             audioSource.clip = clip;
             audioSource.Play();
         }
-        else
-        {
-            Debug.LogError("Audio clip is null or AudioSource is missing.");
-        }
     }
-
-    IEnumerator PlayStepSounds()
-    {
-        while (isRunning)
-        {
-            PlayAudio(step1Clip);
-            yield return new WaitForSeconds(step1Clip.length);
-            PlayAudio(step2Clip);
-            yield return new WaitForSeconds(step2Clip.length);
-        }
-    }
-
     public void OnChildCollision(GameObject child, Collision collision)
     {
         Debug.LogWarning("Collision detected in child: " + child.name);
-
         if (collision.gameObject.CompareTag("BlueBullet"))
         {
             hp--;
 
             if (hp > 0)
             {
-                anim.ResetTrigger("Run");
-                anim.SetTrigger("hitGolum");
-                StartCoroutine(runAgain());
+                if (child.CompareTag("GollumAttack"))
+                {
+                    anim.ResetTrigger("Run");
+                    anim.SetTrigger("hitGolum");
+                    anim.ResetTrigger("attackPlayer");
+                    StartCoroutine(runAgain());
+                }
+                //else if (child.CompareTag("rightAnim"))
+                //{
+                //    anim.ResetTrigger("Run");
+                //    anim.ResetTrigger("attackPlayer");
+                //    anim.SetTrigger("hitGolum");
+                //    StartCoroutine(runAgain());
+                //}
+                //else if (child.CompareTag("centre"))
+                //{
+                //    anim.ResetTrigger("Run");
+                //    anim.ResetTrigger("attackPlayer");
+                //    anim.SetTrigger("hitGolum");
+                //    StartCoroutine(runAgain());
+                //}
             }
-            else if (hp <= 0)
+            else if (hp == 0)
             {
-                navMeshAgent.enabled = false;
+                navMeshAgent.speed = 0;
+
                 anim.SetTrigger("Death");
+                anim.ResetTrigger("attackPlayer");
+                anim.ResetTrigger("Run");
+                anim.ResetTrigger("Idle");
+
                 StartCoroutine(DestroyMe());
             }
         }
     }
-
     IEnumerator DestroyMe()
     {
         yield return new WaitForSeconds(5f);
-        Destroy(gameObject);
+        GetComponentInParent<SpawnGolemRandom>().GolemKilled();
+        gameObject.SetActive(false);
     }
-
     IEnumerator runAgain()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1.5f);
         anim.ResetTrigger("hitGolum");
         anim.SetTrigger("Run");
     }

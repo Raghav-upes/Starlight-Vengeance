@@ -24,30 +24,46 @@ public class SpawnGolemRandom : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            
+
             this.GetComponent<BoxCollider>().enabled = false;
             RiseGolem();
+            //RiseGolem();
         }
     }
 
 
+    /*    IEnumerator RiseGolem()
+        {
+            for (int i = 1; i < spawnCount + 1; i++)
+            {
+                yield return new WaitForFixedUpdate();
+                this.transform.GetChild(i).GetComponent<SphereCollider>().enabled = true;
+                this.transform.GetChild(i).GetComponent<EnemyGolem>().enabled = true;
+
+                yield return new WaitForSeconds(spawnDelay);
+            }
+        }*/
 
     void RiseGolem()
     {
-        if (index< spawnCount + 1)
+        if (index < spawnCount + 1)
         {
-            
+
             this.transform.GetChild(index).GetComponent<SphereCollider>().enabled = true;
             this.transform.GetChild(index).GetComponent<EnemyGolem>().enabled = true;
-            this.transform.GetChild(index).GetComponent<EnemyGolem>().enableColliders();
             this.transform.GetChild(index).GetComponent<EnemyGolem>().WakeRandom();
             index++;
             Invoke("RiseGolem", spawnDelay);
 
-      
+
         }
     }
 
+    /*  void Woku()
+      {
+          this.transform.GetChild(index).GetComponent<SphereCollider>().enabled = true;
+          this.transform.GetChild(index).GetComponent<EnemyGolem>().enabled = true;
+      }*/
     IEnumerator SpawnEnemiesAroundPlayer()
     {
         yield return new WaitForSeconds(1f);
@@ -59,7 +75,7 @@ public class SpawnGolemRandom : MonoBehaviour
             spawnPosition.y = 50f;
 
             // Instantiate enemy and handle spawning
-            GameObject enemy = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity,this.transform);
+            GameObject enemy = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity, this.transform);
             Rigidbody rb = enemy.GetComponent<Rigidbody>();
             if (rb != null)
             {
@@ -105,7 +121,10 @@ public class SpawnGolemRandom : MonoBehaviour
         EnemyDeathCount--;
         if (EnemyDeathCount == 0)
         {
-            GetComponentInChildren<PurifyTower>().canvasText.text = "Purify the tower";
+            if (GetComponentInChildren<PurifyTower>() != null)
+                GetComponentInChildren<PurifyTower>().canvasText.text = "Purify the tower";
+            if (GetComponentInChildren<PurifyTowerFinalBoss>() != null)
+                GetComponentInChildren<PurifyTowerFinalBoss>().canvasText.text = "Purify the tower";
             orbSphere.GetComponent<SphereCollider>().enabled = true;
         }
     }

@@ -101,7 +101,10 @@ public class SpawnAtRandom : MonoBehaviour
         EnemyDeathCount--;
         if(EnemyDeathCount==0)
         {
+            if(GetComponentInChildren<PurifyTower>()!=null)
             GetComponentInChildren<PurifyTower>().canvasText.text = "Purify the tower";
+            if (GetComponentInChildren<PurifyTowerFinalBoss>() != null)
+                GetComponentInChildren<PurifyTowerFinalBoss>().canvasText.text = "Purify the tower";
             orbSphere.GetComponent<SphereCollider>().enabled = true;
         }
     }
