@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UIElements;
@@ -13,7 +12,7 @@ public class BossEnemy : MonoBehaviour
     public float rotationSpeed = 5.0f;  // Speed of the Lerp rotation
     public float rotationThreshold = 15f;  // Maximum allowed angle (in degrees)
     private bool isThrowing = false;
-    private bool sequenceActive = false;
+    private bool sequenceActive=false;
     //private GameObject laserShoot;
     [SerializeField] private float projectileSpeed = 10f;
 
@@ -23,9 +22,7 @@ public class BossEnemy : MonoBehaviour
     public AudioClip groundClip;//Added
     private AudioSource audioSource;//Added
 
-    private bool isCrater = false;
-
-    private int numAttack = 0;
+    private int numAttack=0;
 
     Animator anim;
 
@@ -33,21 +30,12 @@ public class BossEnemy : MonoBehaviour
 
     private ParticleSystem ps;
 
-    public TerrainData originalLand;
     [SerializeField] private float sandEffectSpeed = 5f;
     [SerializeField] private float sandEffectLifetime = 3f;
     private GameObject currentSandEffect;
     private GameObject currentFlames;
     [SerializeField] private GameObject sandEffectPrefab;
     [SerializeField] private GameObject flamesEffectPrefab;
-
-    public float craterRadius = 50f;   // Radius of the crater
-    public float craterDepth = 0.2f;  // Depth of the crater
-
-    /*private float[,] originalHeights;  // To store the original heightmap
-    *//*private float[,] tempHeights;*//*      // Temporary heightmap for modifications
-    private int heightMapWidth;
-    private int heightMapHeight;*/
 
     bool isSandFormed = false;
 
@@ -57,7 +45,6 @@ public class BossEnemy : MonoBehaviour
 
     void Start()
     {
-
         player = GameObject.FindGameObjectWithTag("Player").transform;
 
         foreach (CapsuleCollider capsuleCollider in capsuleColliders)
@@ -66,25 +53,11 @@ public class BossEnemy : MonoBehaviour
             capsuleCollider.gameObject.AddComponent<LimbBoss>();
         }
 
-        //Terrain terrain = Terrain.activeTerrain;
-        //if (terrain == null)
-        //{
-        //    Debug.LogError("No active terrain found in the scene.");
-        //    return;
-        //}
-
-       /* TerrainData terrainData = terrain.terrainData;
-        //terrain.terrainData = FlatLand;
-        heightMapWidth = terrainData.heightmapResolution;
-        heightMapHeight = terrainData.heightmapResolution;*/
-/*
-        // Store the original terrain heights once at the start of the game
-        originalHeights = terrainData.GetHeights(0, 0, heightMapWidth, heightMapHeight);*/
-
     }
 
     private void Awake()
     {
+
         audioSource = GetComponent<AudioSource>();//Added
         anim = GetComponent<Animator>();
         capsuleColliders = GetComponentsInChildren<CapsuleCollider>();
@@ -105,20 +78,20 @@ public class BossEnemy : MonoBehaviour
 
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         }
-
-        if (distanceToPlayer < 80f && distanceToPlayer > 30f)
+        
+        if (distanceToPlayer<80f && distanceToPlayer > 30f)
         {
             if (!sequenceActive)
             {
                 StartCoroutine(TriggerGroundAttackSequence());
-                if (!isSandFormed)
-                {
-                    PlayAudio(groundClip, "Ground audio");
-                    InstantiateSandEffect();
-                }
+                    if (!isSandFormed)
+                    {
+                        PlayAudio(groundClip, "Ground audio");
+                        InstantiateSandEffect();
+                    } 
             }
         }
-        if (distanceToPlayer <= 30f)
+        if (distanceToPlayer<=30f)
         {
             anim.ResetTrigger("laserAttack");
             anim.ResetTrigger("groundAttack");
@@ -128,7 +101,7 @@ public class BossEnemy : MonoBehaviour
     }
     IEnumerator TriggerGroundAttackSequence()
     {
-        sequenceActive = true;
+        sequenceActive=true;
         for (int i = 0; i < 3; i++)
         {
             StartCoroutine(DelayGroundAttacxk());
@@ -151,27 +124,12 @@ public class BossEnemy : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Ground") && !isCrater)
+        if (other.CompareTag("Ground"))
         {
-            
-            isCrater = true;
-            GetComponent<Rigidbody>().useGravity = true;
-            GetComponent<Rigidbody>().isKinematic = false;
-            StartCoroutine(DisableGravityAfterDelay());
-            this.GetComponent<BossEnemy>().enabled = true;
+            GetComponent<Rigidbody>().useGravity = false;
+            GetComponent<Rigidbody>().isKinematic = true;
         }
     }
-    private IEnumerator DisableGravityAfterDelay()
-    {
-        yield return new WaitForSeconds(0.13f);
-        CreateCrater(transform.position);
-        yield return new WaitForSeconds(2f);
-
-        // Disable gravity and make the Rigidbody kinematic after the delay
-        GetComponent<Rigidbody>().useGravity = false;
-        GetComponent<Rigidbody>().isKinematic = true;
-    }
-
     IEnumerator DelayGroundAttacxk()
     {
         yield return new WaitForSeconds(2f);
@@ -185,7 +143,7 @@ public class BossEnemy : MonoBehaviour
         if (flamesEffectPrefab != null)
         {
             isFlameThrowing = true;
-            currentFlames = Instantiate(flamesEffectPrefab, mouthTransform.position, mouthTransform.rotation);
+            currentFlames=Instantiate(flamesEffectPrefab, mouthTransform.position, mouthTransform.rotation);
         }
         StartCoroutine(stopLaserAttack(currentFlames));
     }
@@ -193,7 +151,7 @@ public class BossEnemy : MonoBehaviour
     {
         anim.ResetTrigger("laserAttack");
         yield return new WaitForSeconds(4f);
-        isFlameThrowing = false;
+        isFlameThrowing=false;
         sequenceActive = false;
         Destroy(obj.gameObject);
     }
@@ -266,8 +224,6 @@ public class BossEnemy : MonoBehaviour
         this.GetComponentInChildren<LimbBoss>().enabled = false;
     }
 
-
-
     void PlayAudio(AudioClip clip, string clipName)
     {
         if (audioSource != null && clip != null)
@@ -278,91 +234,5 @@ public class BossEnemy : MonoBehaviour
         }
     }
 
-    private void CreateCrater(Vector3 impactPosition)
-    {
-        Debug.LogError("adsa");
-        Terrain.activeTerrain.terrainData = originalLand;
-        /*// Access the terrain directly from the active terrain in the hierarchy
-        Terrain terrain = Terrain.activeTerrain;
-        if (terrain == null)
-        {
-            Debug.LogError("No active terrain found in the scene.");
-            return;
-        }
 
-        TerrainData terrainData = terrain.terrainData;  // Access the TerrainData from the Terrain component
-        int heightMapWidth = terrainData.heightmapResolution;
-        int heightMapHeight = terrainData.heightmapResolution;
-
-        // Convert world position to terrain position
-        Vector3 terrainPosition = impactPosition - terrain.transform.position;
-
-        // Convert to heightmap space
-        float relativeX = terrainPosition.x / terrainData.size.x;
-        float relativeZ = terrainPosition.z / terrainData.size.z;
-
-        int craterPosX = Mathf.RoundToInt(relativeX * heightMapWidth);
-        int craterPosZ = Mathf.RoundToInt(relativeZ * heightMapHeight);
-
-        int craterWidth = Mathf.RoundToInt(craterRadius / terrainData.size.x * heightMapWidth);
-        int craterHeight = Mathf.RoundToInt(craterRadius / terrainData.size.z * heightMapHeight);
-
-        // Get the heightmap surrounding the impact point
-        float[,] heights = terrainData.GetHeights(craterPosX - craterWidth / 2, craterPosZ - craterHeight / 2, craterWidth, craterHeight);
-
-        *//*// Modify the heightmap to create a crater
-        for (int x = 0; x < craterWidth; x++)
-        {
-            for (int z = 0; z < craterHeight; z++)
-            {
-                float distance = Vector2.Distance(new Vector2(x, z), new Vector2(craterWidth / 2, craterHeight / 2));
-                float heightAdjustment = Mathf.Max(0, (craterRadius - distance) / craterRadius) * craterDepth;
-                heights[x, z] -= heightAdjustment;  // Lower the height to create a depression
-            }
-        }*//*
-
-        for (int x = 0; x < craterWidth; x++)
-        {
-            for (int z = 0; z < craterHeight; z++)
-            {
-                float distance = Vector2.Distance(new Vector2(x, z), new Vector2(craterWidth / 2, craterHeight / 2));
-                if (distance < craterWidth / 2)
-                {
-                    float heightAdjustment = Mathf.Max(0, (craterRadius - distance) / craterRadius) * craterDepth;
-                    heights[x, z] -= heightAdjustment;
-                }
-            }
-        }
-
-        // Apply the modified heightmap back to the terrain
-        terrainData.SetHeights(craterPosX - craterWidth / 2, craterPosZ - craterHeight / 2, heights);*/
-        Terrain.activeTerrain.GetComponent<TerrainCollider>().terrainData = originalLand;
-        DestroyCraterObjects(impactPosition);
-    }
-
-    private void DestroyCraterObjects(Vector3 impactPosition)
-    {
-        GameObject[] craterObjects = GameObject.FindGameObjectsWithTag("CraterObjects");
-        foreach (GameObject obj in craterObjects)
-        {
-            float distanceToCrater = Vector3.Distance(impactPosition, obj.transform.position);
-            if (distanceToCrater <= craterRadius)
-            {
-                Destroy(obj);
-            }
-        }
-    }
-
-   /* public void ResetTerrain()
-    {
-        Terrain terrain = Terrain.activeTerrain;
-        if (terrain == null)
-        {
-            Debug.LogError("No active terrain found in the scene.");
-            return;
-        }
-
-        TerrainData terrainData = terrain.terrainData;
-        terrainData.SetHeights(0, 0, originalHeights);
-    }*/
 }
