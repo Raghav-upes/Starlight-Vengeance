@@ -12,6 +12,10 @@ public class CanvasToggle : MonoBehaviour
     private bool isAnimating;
     private Vector3 originalScale;
 
+    public GameObject Watch;
+
+    public Vector3 Offset;
+
     void Start()
     {
         if (targetCanvas != null)
@@ -34,8 +38,9 @@ public class CanvasToggle : MonoBehaviour
 
     void Update()
     {
-        // Check if the right-hand controller is available
-        var rightHandDevices = new List<InputDevice>();
+        targetCanvas.transform.position=new Vector3(Watch.transform.position.x+Offset.x, Watch.transform.position.y + Offset.y, Watch.transform.position.z + Offset.z);
+          // Check if the right-hand controller is available
+          var rightHandDevices = new List<InputDevice>();
         InputDevices.GetDevicesAtXRNode(XRNode.RightHand, rightHandDevices);
 
         if (rightHandDevices.Count > 0)
