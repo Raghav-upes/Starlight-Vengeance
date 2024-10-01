@@ -186,13 +186,31 @@ public class BossEnemy : MonoBehaviour
         {
             isFlameThrowing = true;
             currentFlames = Instantiate(flamesEffectPrefab, mouthTransform.position, mouthTransform.rotation);
+            StartCoroutine(ScaleOverTime(currentFlames.transform, 6f)); // 6 seconds duration for scaling
         }
         StartCoroutine(stopLaserAttack(currentFlames));
     }
+
+    IEnumerator ScaleOverTime(Transform flameTransform, float duration)
+    {
+        float timeElapsed = 0f;
+        Vector3 initialScale = flameTransform.localScale;
+        Vector3 finalScale = new Vector3(1f, 1f, 1f);
+
+        while (timeElapsed < duration)
+        {
+            flameTransform.localScale = Vector3.Lerp(initialScale, finalScale, timeElapsed / duration);
+            timeElapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        flameTransform.localScale = finalScale;
+    }
+
     IEnumerator stopLaserAttack(GameObject obj)
     {
         anim.ResetTrigger("laserAttack");
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(6f);
         isFlameThrowing = false;
         sequenceActive = false;
         Destroy(obj.gameObject);

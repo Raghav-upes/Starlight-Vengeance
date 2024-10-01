@@ -15,6 +15,8 @@ public class EnemyAI : MonoBehaviour
     public AudioClip idleClip;
     public AudioClip spitClip;
     public AudioClip hitClip;
+
+    private HealthCustom healthCustom;
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
@@ -27,7 +29,7 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private Transform mouthTransform;
     [SerializeField] private float projectileSpeed = 10f;
 
-    private bool isThrowing=false;
+    public bool isThrowing=false;
     private void Awake()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
@@ -131,6 +133,20 @@ public class EnemyAI : MonoBehaviour
         }
         yield return new WaitForSeconds(5f);
         isThrowing = false;
+
+        StartCoroutine(updateSpitEffect());
+    }
+    IEnumerator updateSpitEffect()
+    {
+        yield return new WaitForSeconds(1f);
+        healthCustom.updateSpitEFfect();
+        //float timer = Time.deltaTime;
+        //float alpha = Mathf.Clamp(1.0f - timer / 100.0f, 0.0f, 1.0f);
+        //if (isThrowing)
+        //{ 
+        //    spitEffect.color = new Color(color.r, color.g, color.b, alpha);
+        //}
+        //spitEffect.color = new Color(color.r, color.g, color.b, 0);
     }
     public void PlayAudio(AudioClip clip)
     {

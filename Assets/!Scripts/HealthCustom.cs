@@ -17,9 +17,14 @@ public class HealthCustom : MonoBehaviour
     public GameObject[] healthBarCube;
     private Coroutine reduceHealthCoroutine;
 
+    private Color spitColor;
+    private EnemyAI enemyAI;
+    public SpriteRenderer spitEffect;
+
     private void Start()
     {
         color = blood.color;
+        spitColor = spitEffect.color;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -179,5 +184,16 @@ public class HealthCustom : MonoBehaviour
         {
             StopCoroutine(reduceHealthCoroutine);
         }
+    }
+
+    public void updateSpitEFfect()
+    {
+        float timer = Time.deltaTime;
+        float alpha = Mathf.Clamp(1.0f - timer / 100.0f, 0.0f, 1.0f);
+        if (enemyAI.isThrowing)
+        {
+            spitEffect.color = new Color(color.r, color.g, color.b, alpha);
+        }
+        spitEffect.color = new Color(color.r, color.g, color.b, 0);
     }
 }
