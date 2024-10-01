@@ -41,6 +41,19 @@ public class HealthCustom : MonoBehaviour
                 isRegenerating = false;
             }
         }
+        if (other.CompareTag("Spit"))
+        {
+            health -= 10;
+            UpdateHealthBar();
+            UpdateBloodAlpha();
+            StartCoroutine(updateSpitEFfect());
+
+            if (regenCoroutine != null)
+            {
+                StopCoroutine(regenCoroutine);
+                isRegenerating = false;
+            }
+        }
         if (other.CompareTag("GollumAttack"))
         {
             health -= 40;
@@ -186,14 +199,18 @@ public class HealthCustom : MonoBehaviour
         }
     }
 
-    public void updateSpitEFfect()
+    public IEnumerator updateSpitEFfect()
     {
-        float timer = Time.deltaTime;
-        float alpha = Mathf.Clamp(1.0f - timer / 100.0f, 0.0f, 1.0f);
-        if (enemyAI.isThrowing)
-        {
-            spitEffect.color = new Color(color.r, color.g, color.b, alpha);
-        }
+        yield return null;
+        
+        spitEffect.color = new Color(color.r, color.g, color.b, 0.9f);
+        StartCoroutine(stopSpitEFfect());
+
+
+    }
+    public IEnumerator stopSpitEFfect()
+    {
+        yield return new WaitForSeconds(0.5f);
         spitEffect.color = new Color(color.r, color.g, color.b, 0);
     }
 }

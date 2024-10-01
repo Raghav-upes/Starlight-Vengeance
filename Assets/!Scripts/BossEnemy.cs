@@ -31,7 +31,7 @@ public class BossEnemy : MonoBehaviour
 
     private float hp = 100f;
 
-    private ParticleSystem ps;
+    public ParticleSystem ps;
 
     public TerrainData originalLand;
     [SerializeField] private float sandEffectSpeed = 5f;
@@ -155,8 +155,10 @@ public class BossEnemy : MonoBehaviour
         {
             
             isCrater = true;
+            
             GetComponent<Rigidbody>().useGravity = true;
             GetComponent<Rigidbody>().isKinematic = false;
+            Instantiate(ps, transform.position, Quaternion.Euler(90, 0, 0));
             StartCoroutine(DisableGravityAfterDelay());
             this.GetComponent<BossEnemy>().enabled = true;
         }
@@ -166,6 +168,8 @@ public class BossEnemy : MonoBehaviour
         yield return new WaitForSeconds(0.13f);
         CreateCrater(transform.position);
         yield return new WaitForSeconds(2f);
+        
+
 
         // Disable gravity and make the Rigidbody kinematic after the delay
         GetComponent<Rigidbody>().useGravity = false;

@@ -130,24 +130,25 @@ public class EnemyAI : MonoBehaviour
         {
             Vector3 direction = (Camera.main.transform.position - mouthTransform.position).normalized;
             rb.AddForce(direction * projectileSpeed, ForceMode.VelocityChange);
+            //healthCustom.updateSpitEFfect();
         }
         yield return new WaitForSeconds(5f);
         isThrowing = false;
 
-        StartCoroutine(updateSpitEffect());
+        
     }
-    IEnumerator updateSpitEffect()
-    {
-        yield return new WaitForSeconds(1f);
-        healthCustom.updateSpitEFfect();
-        //float timer = Time.deltaTime;
-        //float alpha = Mathf.Clamp(1.0f - timer / 100.0f, 0.0f, 1.0f);
-        //if (isThrowing)
-        //{ 
-        //    spitEffect.color = new Color(color.r, color.g, color.b, alpha);
-        //}
-        //spitEffect.color = new Color(color.r, color.g, color.b, 0);
-    }
+    //IEnumerator updateSpit()
+    //{
+    //    yield return new WaitForSeconds(1f);
+    //    healthCustom.updateSpitEFfect();
+    //    //float timer = Time.deltaTime;
+    //    //float alpha = Mathf.Clamp(1.0f - timer / 100.0f, 0.0f, 1.0f);
+    //    //if (isThrowing)
+    //    //{ 
+    //    //    spitEffect.color = new Color(color.r, color.g, color.b, alpha);
+    //    //}
+    //    //spitEffect.color = new Color(color.r, color.g, color.b, 0);
+    //}
     public void PlayAudio(AudioClip clip)
     {
         if (audioSource != null && clip != null)
