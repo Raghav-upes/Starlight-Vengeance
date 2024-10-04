@@ -167,7 +167,7 @@ public class BossEnemy : MonoBehaviour
     {
         yield return new WaitForSeconds(0.13f);
         CreateCrater(transform.position);
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1.5f);
         
 
 
