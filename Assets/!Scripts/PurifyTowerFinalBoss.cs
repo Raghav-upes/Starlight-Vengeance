@@ -11,8 +11,7 @@ public class PurifyTowerFinalBoss : MonoBehaviour
     public Canvas canvas;
 
     public GameObject FinalBoss;
-    public GameObject NextGunToBeUnlock;
-    public GameObject NextGunParentToBeUnlock;
+
     private void OnTriggerEnter(Collider other)
     {
         // Check if the object entering the collider has the "Player" tag (which should be your XR rig)
@@ -63,11 +62,10 @@ public class PurifyTowerFinalBoss : MonoBehaviour
                 {
                     materials[0] = greenMat;
                     eyeRenderer.materials = materials;
-
-                    NextGunToBeUnlock.SetActive(true);
-                    NextGunParentToBeUnlock.GetComponent<BoxCollider>().enabled = true;
-                    NextGunParentToBeUnlock.GetComponent<WeaponSpawner>().enabled = true;
                     canvas.gameObject.SetActive(false);
+
+                    StartCoroutine(this.GetComponent<BossSpawner>().ActivatePortal());
+
                 }
             }
             else
@@ -80,6 +78,9 @@ public class PurifyTowerFinalBoss : MonoBehaviour
             Debug.LogError("Eye or Pink material is missing.");
         }
     }
+
+
+
 
 
 }

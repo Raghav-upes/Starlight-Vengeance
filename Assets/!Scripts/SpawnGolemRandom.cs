@@ -124,7 +124,10 @@ public class SpawnGolemRandom : MonoBehaviour
             if (GetComponentInChildren<PurifyTower>() != null)
                 GetComponentInChildren<PurifyTower>().canvasText.text = "Purify the tower";
             if (GetComponentInChildren<PurifyTowerFinalBoss>() != null)
+            {
                 GetComponentInChildren<PurifyTowerFinalBoss>().canvasText.text = "Purify the tower";
+               /* GetComponent<PurifyTowerFinalBoss>().spawnFinalBoss();*/
+            }
             orbSphere.GetComponent<SphereCollider>().enabled = true;
         }
     }

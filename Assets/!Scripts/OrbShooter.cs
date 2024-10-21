@@ -32,7 +32,7 @@ public class OrbShooter : MonoBehaviour
         Player = GameObject.FindGameObjectWithTag("Player");
         originalScale = new Vector3(3.6f, 3.6f, 3.6f);
         Player.GetComponentInChildren<HealthCustom>().StopReducingHealthOverTime();
-        Player.GetComponentInChildren<HealthCustom>().enabled = false;
+       /* Player.GetComponentInChildren<HealthCustom>().enabled = false;*/
         Player.GetComponentInChildren<CapsuleCollider>().enabled = false;
         StartCoroutine(ScaleCanvas(originalScale, Vector3.zero));
         

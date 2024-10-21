@@ -65,9 +65,12 @@ public class PurifyTower : MonoBehaviour
                     eyeRenderer.materials = materials;
                     ToBeNectTower.GetComponent<BoxCollider>().enabled=true;
                     ToBeNectTower.transform.GetChild(0).GetChild(4).gameObject.SetActive(true);
-                    NextGunToBeUnlock.SetActive(true);
-                    NextGunParentToBeUnlock.GetComponent<BoxCollider>().enabled = true;
-                    NextGunParentToBeUnlock.GetComponent<WeaponSpawner>().enabled = true;
+                    if (NextGunParentToBeUnlock != null && NextGunParentToBeUnlock != null)
+                    {
+                        NextGunToBeUnlock.SetActive(true);
+                        NextGunParentToBeUnlock.GetComponent<BoxCollider>().enabled = true;
+                        NextGunParentToBeUnlock.GetComponent<WeaponSpawner>().enabled = true;
+                    }
                     canvas.gameObject.SetActive(false);
                 }
             }

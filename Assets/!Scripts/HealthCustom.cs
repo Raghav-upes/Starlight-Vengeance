@@ -6,7 +6,7 @@ using UnityEngine;
 public class HealthCustom : MonoBehaviour
 {
     public SpriteRenderer blood;
-    public int health = 100;
+    public float health = 100;
     private Color color;
     private bool isRegenerating = false;
 
@@ -98,7 +98,7 @@ public class HealthCustom : MonoBehaviour
     private void UpdateHealthBar()
     {
       
-        int activeCubes = health / 10;  
+        int activeCubes = (int)(health / 10f);  
 
         for (int i = 0; i < healthBarCube.Length; i++)
         {
@@ -143,7 +143,7 @@ public class HealthCustom : MonoBehaviour
     {
         isRegenerating = true;
         float elapsedTime = 0f;
-        int initialHealth = health;
+        float initialHealth = health;
 
         while (health < 100 && elapsedTime < regenDuration)
         {
@@ -170,7 +170,7 @@ public class HealthCustom : MonoBehaviour
         {
             yield return null;
 
-            health -= Mathf.CeilToInt(health * 0.0005f); // Reduce health by 10%
+            health -= 0.5f; // Reduce health by 10%
 
             UpdateHealthBar();  // Update health bar UI
             UpdateBloodAlpha(); // Update blood overlay
@@ -193,10 +193,12 @@ public class HealthCustom : MonoBehaviour
 
     public void StopReducingHealthOverTime()
     {
-        if (reduceHealthCoroutine != null)
-        {
-            StopCoroutine(reduceHealthCoroutine);
-        }
+        if(reduceHealthCoroutine != null)
+        StopCoroutine(reduceHealthCoroutine);
+        StopAllCoroutines();
+        regenCoroutine = StartCoroutine(RegenerateHealth());
+        
+        
     }
 
     public IEnumerator updateSpitEFfect()

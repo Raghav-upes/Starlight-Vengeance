@@ -158,7 +158,7 @@ public class BossEnemy : MonoBehaviour
             
             GetComponent<Rigidbody>().useGravity = true;
             GetComponent<Rigidbody>().isKinematic = false;
-            Instantiate(ps, transform.position, Quaternion.Euler(90, 0, 0));
+
             StartCoroutine(DisableGravityAfterDelay());
             this.GetComponent<BossEnemy>().enabled = true;
         }
@@ -166,13 +166,15 @@ public class BossEnemy : MonoBehaviour
     private IEnumerator DisableGravityAfterDelay()
     {
         yield return new WaitForSeconds(0.13f);
+        Instantiate(ps, transform.position, Quaternion.Euler(90, 0, 0));
+        yield return new WaitForSeconds(0.1f);
         CreateCrater(transform.position);
         yield return new WaitForSeconds(1.5f);
         
 
 
-        // Disable gravity and make the Rigidbody kinematic after the delay
-        GetComponent<Rigidbody>().useGravity = false;
+ /*       // Disable gravity and make the Rigidbody kinematic after the delay
+        GetComponent<Rigidbody>().useGravity = false;*/
         GetComponent<Rigidbody>().isKinematic = true;
     }
 
